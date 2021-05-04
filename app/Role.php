@@ -13,7 +13,8 @@ class Role extends Model
     public const MANAGER = "Manager";
     public const REVIEWER = "Reviewer";
     public const USER = "User";
-    protected $fillable = ['name'];
+
+    protected $fillable = ['name','user_id'];
 
     /*
      * get user for this role
@@ -25,4 +26,5 @@ class Role extends Model
     {
         return $this->belongsTo('App\User');
     }
+
 }

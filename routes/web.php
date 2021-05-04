@@ -29,6 +29,7 @@ Route::group([
 ], function () {
     Route::view('/dashboard', 'admin.home')->name('dashboard');
     Route::get('/list-of-managers', 'Admin\ManagerController@listOfManagers')->name('list-of-managers');
+    Route::get('/list-of-reviewers', 'Admin\ReviewerController@listOfReviewers')->name('list-of-reviewers');
     Route::get('/list-of-categories', 'Admin\CategoryController@listOfCategories')->name('list-of-categories');
     Route::resource('manager','Admin\ManagerController');
     Route::resource('category','Admin\CategoryController');

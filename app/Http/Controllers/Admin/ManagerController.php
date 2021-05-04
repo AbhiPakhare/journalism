@@ -66,6 +66,7 @@ class ManagerController extends Controller
 
         $role = new Role();
         $role->name = Role::MANAGER;
+        $manager->save();
         $manager->role()->save($role);
         $manager->save();
 

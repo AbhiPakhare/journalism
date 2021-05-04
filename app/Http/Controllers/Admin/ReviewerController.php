@@ -19,7 +19,7 @@ class ReviewerController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.listOfReviewers');
     }
 
     /**
@@ -31,6 +31,24 @@ class ReviewerController extends Controller
     {
         $categories = Category::select('id','name')->get();
         return view('admin.createReviewer', compact('categories'));
+    }
+
+    public function listOfReviewers()
+    {
+        $reviewers = User::with(['role' => function ($q) {
+            $q->where('name', Role::REVIEWER);
+        }])
+        ->select('id','name','email')
+            ->get();
+
+        return datatables()->eloquent($reviewers)
+            ->addColumn('role', function (User $user) {
+                return $user->role ? $user->role->name : '';
+            })
+            ->addColumn('action', function(User $user) {
+                return '<a href="manager/'. $user->id .'/edit" class="btn btn-primary">Edit</a>';
+            })
+            ->toJson();
     }
 
     /**
@@ -50,6 +68,7 @@ class ReviewerController extends Controller
         $role = new Role();
         $role->name = Role::REVIEWER;
         $manager->role()->save($role);
+        $manager->save();
         $manager->categories()->sync($request->categories);
         $manager->save();
 
