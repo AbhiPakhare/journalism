@@ -15,7 +15,12 @@ class CreateJournalsTable extends Migration
     {
         Schema::create('journals', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained();
+            $table->string('reference_id');
+            $table->string('status')->default('Waiting');
+            $table->text('reason')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
