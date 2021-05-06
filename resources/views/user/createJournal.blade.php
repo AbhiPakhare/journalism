@@ -66,15 +66,21 @@
     FilePond.registerPlugin(FilePondPluginFileValidateType);
           FilePond.create(document.querySelector('input[id = "title"]'), {
               acceptedFileTypes: ['application/pdf'],
+              required : true,
+              allowRevert : false,
+              credits :false
           }); 
           FilePond.create(document.querySelector('input[id = "content"]'), {
               acceptedFileTypes: ['application/pdf'],
+              credits :false
           }); 
           FilePond.create(document.querySelector('input[id = "paper"]'), {
               acceptedFileTypes: ['application/pdf'],
+              credits :false
           }); 
           FilePond.create(document.querySelector('input[id = "bibliography"]'), {
               acceptedFileTypes: ['application/pdf'],
+              credits :false
           }); 
 
           FilePond.setOptions({

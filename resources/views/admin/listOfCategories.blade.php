@@ -11,13 +11,16 @@
             <a href="{{route('admin.category.create')}}" class="btn btn-primary mt-3 mb-4">Create Category</a>
 
 
-            <table class="table table-borderless" id="datatable">
+            <table class="table" id="datatable">
                 <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>action</th>
-                </tr>
+                    <tr>
+                        <th>Name</th>
+                        <th>action</th>
+                    </tr>
                 </thead>
+                <tbody>
+                    
+                </tbody>
             </table>
         </div>
     </div>
@@ -27,6 +30,7 @@
         $(document).ready( function () {
 
             $('#datatable').DataTable({
+                "bLengthChange" : false,
                 "processing": true,
                 "serverSide": true,
                 responsive : true,
