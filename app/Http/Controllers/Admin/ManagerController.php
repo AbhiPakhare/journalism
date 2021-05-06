@@ -38,9 +38,8 @@ class ManagerController extends Controller
                 return ($manager->role) ? $manager->role->name : '';
             })
             ->addColumn('action', function(User $manager) {
-
                 return '<a href="manager/'. $manager->id .'/edit" target="_blank" class="btn btn-primary">Edit</a>
-                        <button class="btn btn-danger btn-delete" data-name = "'.$manager->name.'" data-remote="/admin/manager/' . $manager->id .'">Delete</button>';
+                        <button class="btn btn-danger btn-delete"  data-remote="/admin/manager/' . $manager->id .'">Delete</button>';
             })
             ->editColumn('created_at', function($manager) {
                 return $manager->created_at ? with(new Carbon($manager->created_at))->format('d/M/Y') : '';

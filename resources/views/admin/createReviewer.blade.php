@@ -62,7 +62,7 @@
     </div>
 @endsection
 
-@section('script')
+@push('scripts')
     <script>
         $(document).ready(function() {
             $('#categories').select2({
@@ -72,5 +72,5 @@
             });
         });
     </script>
-@endsection
+@endpush
 
