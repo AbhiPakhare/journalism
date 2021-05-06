@@ -25,7 +25,7 @@ Auth::routes();
 Route::group([
     'as' => 'admin.',
     'prefix' => 'admin',
-    'middleware' => 'can:admin'
+    'middleware' => ['can:admin']
 ], function () {
     Route::view('/dashboard', 'admin.home')->name('dashboard');
     Route::get('/list-of-managers', 'Admin\ManagerController@listOfManagers')->name('list-of-managers');

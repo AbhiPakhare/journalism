@@ -16,9 +16,7 @@ class Role extends Model
 
     protected $fillable = ['name','user_id'];
 
-    /*
-     * get user for this role
-     * */
+ 
     /**
      * The user that belong to the role.
      */

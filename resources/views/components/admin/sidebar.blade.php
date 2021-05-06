@@ -74,9 +74,4 @@
     </form>
 </div>
 
-<script type="module">
-    import { Toast } from 'coreui.esm.min.js'
 
-    Array.from(document.querySelectorAll('.toast'))
-      .forEach(toastNode => new Toast(toastNode))
-  </script>
