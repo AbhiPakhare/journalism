@@ -43,7 +43,7 @@ class User extends Authenticatable
     /**
      * The role that belong to the user.
      */
-    public function role()
+    public function role(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne('App\Role');
     }

@@ -20,10 +20,8 @@ class AdminRoleSeeder extends Seeder
                     'password' => Hash::make('admin@1234'),
                 ]);
         $role = new Role();
-
-        $role->name = Role::ADMIN;
+        $role->name = 'Admin';
         $admin->role()->save($role);
-        $admin->save();
-
+        
     }
 }

@@ -12,19 +12,17 @@
 
 
             <table class="table table-borderless" id="datatable">
-                <thead class="thead-dark">
+                <thead>
                 <tr>
                     <th>Name</th>
                     <th>action</th>
                 </tr>
                 </thead>
-                <tbody>
-                </tbody>
             </table>
-
         </div>
     </div>
-
+@endsection
+@push('scripts')
     <script>
         $(document).ready( function () {
 
@@ -46,4 +44,4 @@
         });
 
     </script>
-@endsection
+@endpush

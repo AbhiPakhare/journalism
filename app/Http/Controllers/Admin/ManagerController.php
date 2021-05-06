@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreManagerRequest;
-use App\Http\Requests\UpdateManagerRequest;
 use App\Role;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\StoreManagerRequest;
+use App\Http\Requests\UpdateManagerRequest;
 
 class ManagerController extends Controller
 {
@@ -26,17 +27,24 @@ class ManagerController extends Controller
 
     public function listOfManagers()
     {
-
-        $managers = User::with('role')
-            ->select('id','name','email');
+        $managers = User::with('role:id,name,user_id')
+                        ->select(['id','name','email','created_at'])
+                        ->whereHas('role', function ($query) {
+                            $query->where('name', Role::MANAGER);
+                        });
 
         return datatables()->eloquent($managers)
-            ->addColumn('role', function (User $user) {
-                return $user->role ? $user->role->name : '';
+            ->addColumn('role', function (User $manager) {
+                return ($manager->role) ? $manager->role->name : '';
             })
-            ->addColumn('action', function(User $user) {
-                return '<a href="manager/'. $user->id .'/edit" class="btn btn-primary">Edit</a>';
+            ->addColumn('action', function(User $manager) {
+                return '<a href="manager/'. $manager->id .'/edit" target="_blank" class="btn btn-primary">Edit</a>
+                        <button class="btn btn-danger btn-delete"  data-remote="/admin/manager/' . $manager->id .'">Delete</button>';
             })
+            ->editColumn('created_at', function($manager) {
+                return $manager->created_at ? with(new Carbon($manager->created_at))->format('d/M/Y') : '';
+            })
+
             ->toJson();
     }
 
@@ -70,7 +78,7 @@ class ManagerController extends Controller
         $manager->role()->save($role);
         $manager->save();
 
-        return redirect()->route('admin.dashboard');
+        return redirect()->route('admin.manager.index');
     }
 
     /**
@@ -123,6 +131,7 @@ class ManagerController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $manager = User::findOrFail($id);
+        $manager->delete();
     }
 }

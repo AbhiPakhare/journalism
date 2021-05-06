@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreReviewerRequest;
 use App\Role;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -35,19 +36,34 @@ class ReviewerController extends Controller
 
     public function listOfReviewers()
     {
-        $reviewers = User::with(['role' => function ($q) {
-            $q->where('name', Role::REVIEWER);
-        }])
-        ->select('id','name','email')
-            ->get();
+        $reviewers = User::with(['role','categories:id,name'])
+                    ->select('id','name','email','created_at')
+                    ->whereHas('role', function ($query) {
+                        $query->where('name', Role::REVIEWER);
+                    });
+
 
         return datatables()->eloquent($reviewers)
-            ->addColumn('role', function (User $user) {
-                return $user->role ? $user->role->name : '';
+            ->addColumn('role', function (User $reviewers) {
+                return $reviewers->role ? $reviewers->role->name : '';
             })
-            ->addColumn('action', function(User $user) {
-                return '<a href="manager/'. $user->id .'/edit" class="btn btn-primary">Edit</a>';
+            ->addColumn('action', function(User $reviewer) {
+                return '<a href="reviewer/'. $reviewer->id .'/edit" target="_blank" class="btn btn-primary">Edit</a>
+                        <button class="btn btn-danger btn-delete"  data-remote="/admin/reviewer/' . $reviewer->id .'">Delete</button>';
             })
+            ->addColumn('categories', function (User $reviewer) {
+                $categories = $reviewer->categories->pluck('name');
+                $all_categories = [];
+                foreach ($categories as $category) {
+                    array_push($all_categories, "<span class='badge rounded-pill bg-dark text-white'>$category</span>");
+                }
+                return implode(" ",$all_categories);
+
+            })
+            ->editColumn('created_at', function($reviewers) {
+                return $reviewers->created_at ? with(new Carbon($reviewers->created_at))->format('d/M/Y') : '';
+            })
+            ->escapeColumns('categories')
             ->toJson();
     }
 
@@ -72,7 +88,7 @@ class ReviewerController extends Controller
         $manager->categories()->sync($request->categories);
         $manager->save();
 
-        return redirect()->route('admin.dashboard');
+        return redirect()->route('admin.reviewer.index');
     }
 
     /**
@@ -117,6 +133,7 @@ class ReviewerController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $reviewer = User::findOrFail($id);
+        $reviewer->delete();
     }
 }
