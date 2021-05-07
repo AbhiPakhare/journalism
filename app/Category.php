@@ -8,8 +8,6 @@ class Category extends Model
 {
     protected $fillable = [
         'name',
-        'categorizable_id',
-        'categorizable_type'
     ];
 
 

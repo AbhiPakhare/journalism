@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\User;
 
 use App\Journal;
-use App\Http\Controllers\Controller;
+use App\Category;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class JournalController extends Controller
 {
@@ -25,7 +26,8 @@ class JournalController extends Controller
      */
     public function create()
     {
-        return view('user.createJournal');
+        $categories = Category::all();
+        return view('user.createJournal', compact('categories'));
     }
 
     /**
@@ -34,33 +36,58 @@ class JournalController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+
+    public function store(Request $request){
+        $reference_id = time();
+        $journal = Journal::firstOrCreate([
+                                'user_id' => auth()->user()->id,
+                                'reference_id' => $reference_id
+                            ]);
+
+        $journal->addMedia(storage_path('app/journal/temp/title.pdf'))
+                ->toMediaCollection();
+                    
+        $journal->addMedia(storage_path('app/journal/temp/content.pdf'))
+                ->toMediaCollection();
+
+        $journal->addMedia(storage_path('app/journal/temp/paper.pdf'))
+                ->toMediaCollection();
+
+        $journal->addMedia(storage_path('app/journal/temp/bibliography.pdf'))
+                ->toMediaCollection();    
+
+        if($journal) {
+            return redirect()->route('user.dashboard');
+        }else{
+            abort(403,"Some issue occured contact Admin");
+        }
+
+    }
+
+
+    public function storeJournal(Request $request)
     {
-        $x = $request->validate([
-            'title' =>'required|mimes:pdf|max:5000',
+        try {
+            if($request->hasFile('title')) {
+                $request->file('title')->storeAs('journal/temp/','title.pdf');
+            }
+            elseif ($request->hasFile('content')) {
+                $request->file('content')->storeAs('journal/temp/','content.pdf');
+            }
+            elseif ($request->hasFile('paper')) {
+                $request->file('paper')->storeAs('journal/temp/','paper.pdf');
+            }
+            elseif ($request->hasFile('bibliography')) {
+                $request->file('bibliography')->storeAs('journal/temp/','bibliography.pdf');
+            }
+        } catch (\Throwable $th) {
+            return $th;
+        }
 
-        ]);
-        if($request->hasFile('title')) {
-            return $this->tempFileSave($request->file('title'));
-        }
-        elseif ($request->hasFile('content')) {
-            return $this->tempFileSave($request->file('content'));
-        }
-        elseif ($request->hasFile('paper')) {
-            return $this->tempFileSave($request->file('paper'));
-        }
-        elseif ($request->hasFile('bibliography')) {
-            return $this->tempFileSave($request->file('bibliography'));
-        }
     }
 
-    public function tempFileSave($file) {
-        
-        $folder = auth()->user()->id;
-        $titleFileName = $file->getClientOriginalName();
-        $x = $file->storeAs('journal/temp/'.$folder,$titleFileName);
-        return $folder;
-    }
+    
+
 
     /**
      * Display the specified resource.
