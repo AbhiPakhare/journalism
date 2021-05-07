@@ -10,8 +10,11 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- CoreUI CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/@coreui/coreui/dist/css/coreui.min.css" crossorigin="anonymous">
 
+    <link rel="stylesheet" href="https://unpkg.com/@coreui/coreui/dist/css/coreui.min.css" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+    @yield('css')
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 </head>
@@ -39,7 +42,12 @@
 
 <!-- Optional JavaScript -->
 <!-- Popper.js first, then CoreUI JS -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 <script src="https://unpkg.com/@popperjs/core@2"></script>
 <script src="https://unpkg.com/@coreui/coreui/dist/js/coreui.min.js"></script>
+@yield('script')
 </body>
 </html>
