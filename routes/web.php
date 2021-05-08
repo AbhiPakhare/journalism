@@ -1,5 +1,6 @@
 <?php
 
+use App\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -44,7 +45,10 @@ Route::group([
     'prefix' => 'manager',
     'middleware' => 'can:manager'
 ], function () {
-    Route::view('/dashboard', 'home')->name('dashboard');
+
+    Route::view('/dashboard', 'manager.listofFiles')->name('dashboard');
+    Route::get('list-of-files','Manager\ListOfFilesController@index')->name('list-of-files');
+    Route::get('list-of-staff','manager\ListOfFilesController@create')->name('list-of-staff');
 });
 
 /*

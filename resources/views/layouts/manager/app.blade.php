@@ -16,7 +16,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 </head>
 <body class="c-app">
-@include('components.sidebar')
+@include('components.manager.sidebar')
 
 <div class="c-wrapper">
     <header class="c-header c-header-light c-header-fixed">

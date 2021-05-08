@@ -2,10 +2,12 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class UpdateManagerRequest extends FormRequest
+use Illuminate\Validation\Rule;
+use Illuminate\Foundation\Http\FormRequest;
+
+
+class UpdateReviewerRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,6 +26,7 @@ class UpdateManagerRequest extends FormRequest
      */
     public function rules()
     {
+
         return [
             'name' => ['required', 'string', 'max:255'],
             'email' => [
@@ -31,8 +34,9 @@ class UpdateManagerRequest extends FormRequest
                 'string',
                 'email',
                 'max:255',
-                Rule::unique('users')->ignore(request()->manager_id)
+                Rule::unique('users','email')->ignore(request()->reviewer_id)
                 ],
+            'categories' => ['required','array','min:1'],
         ];
     }
 }

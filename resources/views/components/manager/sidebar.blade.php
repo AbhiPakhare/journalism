@@ -4,8 +4,13 @@
     </div>
     <ul class="c-sidebar-nav ps ">
         <li class="c-sidebar-nav-item">
-            <a class="c-sidebar-nav-link" href="/">
-                Dashboard
+            <a class="c-sidebar-nav-link" href="{{route('manager.dashboard')}}">
+                List Of Files
+            </a>
+        </li>
+        <li class="c-sidebar-nav-item">
+            <a class="c-sidebar-nav-link" href="{{route('manager.list-of-staff')}}">
+                List Of Staff
             </a>
         </li>
         <li class="c-sidebar-nav-item">
