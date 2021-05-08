@@ -67,6 +67,9 @@ Route::group([
     'prefix' => 'user',
     'middleware' => 'can:user'
 ], function () {
-    Route::view('/dashboard', 'home')->name('dashboard');
+    Route::view('/dashboard', 'user.home')->name('dashboard');
+    Route::post('/upload-journal','User\JournalController@storeJournal')->name('upload');
+    Route::resource('journal','User\JournalController');
 });
+
 
