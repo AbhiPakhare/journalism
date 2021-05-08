@@ -8,6 +8,23 @@
                 Dashboard
             </a>
         </li>
+        <li class="c-sidebar-nav-dropdown">
+            <a class="c-sidebar-nav-dropdown-toggle" href="#">
+                Journal
+            </a>
+            <ul class="c-sidebar-nav-dropdown-items">
+                <li class="c-sidebar-nav-item">
+                    <a class="c-sidebar-nav-link" href="{{ route('user.journal.create') }}">
+                        Create Journal
+                    </a>
+                </li>
+                <li class="c-sidebar-nav-item">
+                    <a class="c-sidebar-nav-link" href="#">
+                        Submitted Journal
+                    </a>
+                </li>
+            </ul>
+        </li>
         <li class="c-sidebar-nav-item">
             <a class="c-sidebar-nav-link c-active"
                href="{{ route('logout') }}"

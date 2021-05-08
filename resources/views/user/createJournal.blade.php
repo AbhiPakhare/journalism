@@ -1,8 +1,7 @@
 @extends('layouts.user.app')
-@section('css')
+@push('css')
   <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet" />
-  
-@endsection
+@endpush
 @section('content')
 <div class="row justify-content-center">
   <div class="col-md-6">
@@ -53,7 +52,7 @@
 
 @endsection
 
-@section('script')
+@push('scripts')
 
 <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
 <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
@@ -108,4 +107,4 @@
   </script>
 
 
-@endsection
+@endpush

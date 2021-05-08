@@ -6,6 +6,7 @@ use App\Journal;
 use App\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Notifications\ReferencesIdCreated;
 
 class JournalController extends Controller
 {
@@ -55,8 +56,10 @@ class JournalController extends Controller
 
         $journal->addMedia(storage_path('app/journal/temp/bibliography.pdf'))
                 ->toMediaCollection();    
-
+        
+        $journal->categories()->sync([$request->category]);        
         if($journal) {
+            $journal->user->notify(new ReferencesIdCreated($journal->user, $reference_id));
             return redirect()->route('user.dashboard');
         }else{
             abort(403,"Some issue occured contact Admin");
