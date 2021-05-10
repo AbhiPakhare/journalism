@@ -39,7 +39,7 @@
         $(document).ready( function () {
             $('#datatable').DataTable({
                 "bLengthChange" : false,
-                "lengthMenu": [1],
+                "lengthMenu": [10],
                 "processing": true,
                 "serverSide": true,
                 responsive : true,

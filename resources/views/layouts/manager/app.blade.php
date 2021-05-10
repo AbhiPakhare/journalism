@@ -12,11 +12,15 @@
     <!-- CoreUI CSS -->
     <link rel="stylesheet" href="https://unpkg.com/@coreui/coreui/dist/css/coreui.min.css" crossorigin="anonymous">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
+    <link rel="stylesheet" href="https://unpkg.com/@coreui/coreui/dist/css/coreui.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.24/af-2.3.6/b-1.7.0/fc-3.3.2/fh-3.1.8/kt-2.6.1/sb-1.0.1/sp-1.2.2/sl-1.3.3/datatables.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap5.min.css"/>
+
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 </head>
 <body class="c-app">
-@include('components.sidebar')
+@include('components.manager.sidebar')
 
 <div class="c-wrapper">
     @include('components.navbar')
@@ -40,5 +44,8 @@
 <!-- Popper.js first, then CoreUI JS -->
 <script src="https://unpkg.com/@popperjs/core@2"></script>
 <script src="https://unpkg.com/@coreui/coreui/dist/js/coreui.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.24/af-2.3.6/b-1.7.0/fc-3.3.2/fh-3.1.8/kt-2.6.1/sb-1.0.1/sp-1.2.2/sl-1.3.3/datatables.min.js"></script>
+@stack('scripts')
 </body>
 </html>
