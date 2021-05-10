@@ -25,7 +25,7 @@ Auth::routes();
 Route::group([
     'as' => 'admin.',
     'prefix' => 'admin',
-    'middleware' => ['can:admin']
+    'middleware' => ['auth','can:admin']
 ], function () {
     Route::view('/dashboard', 'admin.home')->name('dashboard');
     Route::get('/list-of-managers', 'Admin\ManagerController@listOfManagers')->name('list-of-managers');
@@ -42,7 +42,7 @@ Route::group([
 Route::group([
     'as' => 'manager.',
     'prefix' => 'manager',
-    'middleware' => 'can:manager'
+    'middleware' => ['auth','can:manager']
 ], function () {
     Route::view('/dashboard', 'home')->name('dashboard');
 });
@@ -53,7 +53,7 @@ Route::group([
 Route::group([
     'as' => 'reviewer.',
     'prefix' => 'reviewer',
-    'middleware' => 'can:reviewer'
+    'middleware' => ['auth','can:reviewer']
 ], function () {
     Route::view('/dashboard', 'home')->name('dashboard');
 });
@@ -61,7 +61,7 @@ Route::group([
 Route::group([
     'as' => 'user.',
     'prefix' => 'user',
-    'middleware' => 'can:user'
+    'middleware' => ['auth','can:user']
 ], function () {
     Route::view('/dashboard', 'home')->name('dashboard');
 });

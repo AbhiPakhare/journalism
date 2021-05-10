@@ -16,7 +16,6 @@
                 <tr>
                     <th>Name</th>
                     <th>Email</th>
-                    <th>Role</th>
                     <th>Categories</th>
                     <th>Created at</th>
                     <th>Action</th>
@@ -39,7 +38,7 @@
         $(document).ready( function () {
             $('#datatable').DataTable({
                 "bLengthChange" : false,
-                "lengthMenu": [1],
+                "lengthMenu": [10],
                 "processing": true,
                 "serverSide": true,
                 responsive : true,
@@ -47,12 +46,11 @@
                 "columns": [
                     {data: 'name', name: 'name'}, // index 0
                     {data: 'email', name: 'email'}, // index 1
-                    {data: 'role', name: 'role'}, // index 2
-                    {data: 'categories', name: 'categories'}, // index 3
-                    {data: 'created_at', name: 'created_at'},//index 4
-                    {data: 'action', name: 'action'}, // index 5
+                    {data: 'categories', name: 'categories'}, // index 2
+                    {data: 'created_at', name: 'created_at'},//index 3
+                    {data: 'action', name: 'action'}, // index 4
                 ],
-                order: [[4, 'asc']],
+                order: [[3, 'DESC']],
                 initComplete: function () {
                     this.api().columns().every(function () {
                         var column = this;

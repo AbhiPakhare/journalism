@@ -18,7 +18,7 @@ class ReviewerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): \Illuminate\Http\Response
     {
         return view('admin.listOfReviewers');
     }
@@ -28,15 +28,15 @@ class ReviewerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): \Illuminate\Http\Response
     {
         $categories = Category::select('id','name')->get();
         return view('admin.createReviewer', compact('categories'));
     }
 
-    public function listOfReviewers()
+    public function listOfReviewers(): \Illuminate\Http\JsonResponse
     {
-        $reviewers = User::with(['role','categories:id,name'])
+        $reviewers = User::with(['categories:id,name'])
                     ->select('id','name','email','created_at')
                     ->whereHas('role', function ($query) {
                         $query->where('name', Role::REVIEWER);
@@ -44,15 +44,12 @@ class ReviewerController extends Controller
 
 
         return datatables()->eloquent($reviewers)
-            ->addColumn('role', function (User $reviewers) {
-                return $reviewers->role ? $reviewers->role->name : '';
-            })
             ->addColumn('action', function(User $reviewer) {
                 return '<a href="reviewer/'. $reviewer->id .'/edit" target="_blank" class="btn btn-primary">Edit</a>
                         <button class="btn btn-danger btn-delete"  data-remote="/admin/reviewer/' . $reviewer->id .'">Delete</button>';
             })
             ->addColumn('categories', function (User $reviewer) {
-                $categories = $reviewer->categories->pluck('name');
+                $categories = $reviewer->categories->pluck('name')->toArray();
                 $all_categories = [];
                 foreach ($categories as $category) {
                     array_push($all_categories, "<span class='badge rounded-pill bg-dark text-white'>$category</span>");
@@ -73,7 +70,7 @@ class ReviewerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreReviewerRequest $request)
+    public function store(StoreReviewerRequest $request): \Illuminate\Http\Response
     {
         $manager = User::create([
             'name' => $request->name,
@@ -97,7 +94,7 @@ class ReviewerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id): \Illuminate\Http\Response
     {
         //
     }
@@ -108,7 +105,7 @@ class ReviewerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id): \Illuminate\Http\Response
     {
         //
     }
@@ -120,7 +117,7 @@ class ReviewerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id): \Illuminate\Http\Response
     {
         //
     }
@@ -131,7 +128,7 @@ class ReviewerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id): \Illuminate\Http\Response
     {
         $reviewer = User::findOrFail($id);
         $reviewer->delete();
