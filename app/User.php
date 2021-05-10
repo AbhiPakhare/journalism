@@ -75,4 +75,10 @@ class User extends Authenticatable
         return $this->hasMany(Journal::class, 'reviewer_id','id');
     }
 
+    //Get Phone Number for user
+    public function phone()
+    {
+        return $this->hasOne(Phone::class);
+    }
+
 }

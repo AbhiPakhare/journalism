@@ -18,8 +18,9 @@ class JournalController extends Controller
     public function index()
     {
         $journals = Journal::where('user_id', auth()->user()->id)
-            ->latest()
-            ->paginate(10);
+                            ->latest()
+                            ->paginate(10);
+        // dd($journals->toArray());
         return view('user.showJournal', compact('journals'));
     }
 
@@ -44,22 +45,23 @@ class JournalController extends Controller
     public function store(Request $request){
         $reference_id = time();
         $journal = Journal::firstOrCreate([
-            'user_id' => auth()->user()->id,
-            'reference_id' => $reference_id
-        ]);
-        $journal->addMedia(storage_path('app/journal/temp/title.pdf'))
-            ->toMediaCollection();
+                                'user_id' => auth()->user()->id,
+                                'reference_id' => $reference_id
+                            ]);
 
-        $journal->addMedia(storage_path('app/journal/temp/content.pdf'))
-            ->toMediaCollection();
+        $journal->addMedia(storage_path('app/journal/temp/'.auth()->user()->id.'/title.pdf'))
+                ->toMediaCollection();
+                    
+        $journal->addMedia(storage_path('app/journal/temp/'.auth()->user()->id.'/content.pdf'))
+                ->toMediaCollection();
 
-        $journal->addMedia(storage_path('app/journal/temp/paper.pdf'))
-            ->toMediaCollection();
+        $journal->addMedia(storage_path('app/journal/temp/'.auth()->user()->id.'/paper.pdf'))
+                ->toMediaCollection();
 
-        $journal->addMedia(storage_path('app/journal/temp/bibliography.pdf'))
-            ->toMediaCollection();
-
-        $journal->categories()->sync([$request->category]);
+        $journal->addMedia(storage_path('app/journal/temp/'.auth()->user()->id.'/bibliography.pdf'))
+                ->toMediaCollection();    
+        
+        $journal->categories()->sync([$request->category]);        
         if($journal) {
             $journal->user->notify(new ReferencesIdCreated($journal->user, $reference_id));
             return redirect()->route('user.dashboard');
@@ -74,16 +76,16 @@ class JournalController extends Controller
     {
         try {
             if($request->hasFile('title')) {
-                $request->file('title')->storeAs('journal/temp/','title.pdf');
+                $request->file('title')->storeAs('journal/temp/'.auth()->user()->id,'/title.pdf');
             }
             elseif ($request->hasFile('content')) {
-                $request->file('content')->storeAs('journal/temp/','content.pdf');
+                $request->file('content')->storeAs('journal/temp/'.auth()->user()->id,'/content.pdf');
             }
             elseif ($request->hasFile('paper')) {
-                $request->file('paper')->storeAs('journal/temp/','paper.pdf');
+                $request->file('paper')->storeAs('journal/temp/'.auth()->user()->id,'/paper.pdf');
             }
             elseif ($request->hasFile('bibliography')) {
-                $request->file('bibliography')->storeAs('journal/temp/','bibliography.pdf');
+                $request->file('bibliography')->storeAs('journal/temp/'.auth()->user()->id,'/bibliography.pdf');
             }
         } catch (\Throwable $th) {
             return $th;
@@ -91,7 +93,7 @@ class JournalController extends Controller
 
     }
 
-
+    
 
 
     /**
