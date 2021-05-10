@@ -37,6 +37,7 @@
         $(document).ready( function () {
             $('#datatable').DataTable({
                 "processing": true,
+                "bLengthChange" : false,
                 "serverSide": true,
                 responsive : true,
                 "ajax": "{{ route('admin.list-of-managers') }}",

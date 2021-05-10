@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Category;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreReviewerRequest;
 use App\Role;
 use App\User;
+use App\Category;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\StoreReviewerRequest;
+use App\Http\Requests\UpdateReviewerRequest;
 
 class ReviewerController extends Controller
 {
@@ -72,7 +73,7 @@ class ReviewerController extends Controller
      */
     public function store(StoreReviewerRequest $request): \Illuminate\Http\Response
     {
-        $manager = User::create([
+        $reviewer = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
@@ -80,10 +81,10 @@ class ReviewerController extends Controller
 
         $role = new Role();
         $role->name = Role::REVIEWER;
-        $manager->role()->save($role);
-        $manager->save();
-        $manager->categories()->sync($request->categories);
-        $manager->save();
+        $reviewer->role()->save($role);
+        $reviewer->save();
+        $reviewer->categories()->sync($request->categories);
+        $reviewer->save();
 
         return redirect()->route('admin.reviewer.index');
     }
@@ -107,19 +108,31 @@ class ReviewerController extends Controller
      */
     public function edit($id): \Illuminate\Http\Response
     {
-        //
+        $reviewer = User::with('categories')->findOrFail($id);
+
+        return view('admin.updateReviewer', compact('reviewer'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param UpdateReviewerRequest $request
+     * @param User $reviewer
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id): \Illuminate\Http\Response
+    public function update(UpdateReviewerRequest $request, User $reviewer)
     {
-        //
+        $reviewer_info = collect($request->validated())
+                        ->except(['categories'])
+                        ->toArray();
+
+        $reviewer->fill($reviewer_info);
+        $reviewer->categories()->sync($request->categories);
+        if ($reviewer->save()) {
+            return redirect()->route('admin.reviewer.index');
+        }else{
+            return abort(403,'some issue occured');
+        }
     }
 
     /**

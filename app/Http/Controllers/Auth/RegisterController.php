@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
 use App\Role;
 use App\User;
-use Illuminate\Foundation\Auth\RegistersUsers;
+use App\Phone;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller
 {
@@ -73,10 +74,11 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'phone' => ['required', 'digits:10']
         ]);
     }
 
-    /**
+    /** 
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
@@ -87,11 +89,16 @@ class RegisterController extends Controller
          $user = User::create([
                     'name' => $data['name'],
                     'email' => $data['email'],
-                    'password' => Hash::make($data['password']),
+                    'password' => Hash::make($data['password'])
                 ]);
+                
          $role = new Role();
          $role->name = Role::USER;
          $user->role()->save($role);
+
+         $phone = new Phone();
+         $phone->phone_number = $data['phone'];
+         $user->phone()->save($phone);
 
          return $user;
 

@@ -6,6 +6,9 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Journal;
+use App\Role;
+use App\Category;
 
 class User extends Authenticatable
 {
@@ -45,15 +48,37 @@ class User extends Authenticatable
      */
     public function role(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
-        return $this->hasOne('App\Role');
+        return $this->hasOne(Role::class);
     }
 
     /**
-     * Get all of the categories for the post.
+     * Get all of the categories for the user.
      */
     public function categories(): \Illuminate\Database\Eloquent\Relations\MorphToMany
     {
-        return $this->morphToMany('App\Category', 'categorizable')->withTimestamps();
+        return $this->morphToMany(Category::class, 'categorizable')->withTimestamps();
+    }
+
+    /**
+     * Get the journals for the user.
+     */
+    public function journal(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Journal::class);
+    }
+
+    /**
+     * Get the assigned journals for the reviewer post.
+     */
+    public function assignedJournal(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Journal::class, 'reviewer_id','id');
+    }
+
+    //Get Phone Number for user
+    public function phone()
+    {
+        return $this->hasOne(Phone::class);
     }
 
 }

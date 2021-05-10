@@ -4,20 +4,16 @@
     </div>
     <ul class="c-sidebar-nav ps ">
         <li class="c-sidebar-nav-item">
-            <a class="c-sidebar-nav-link" href="/">
-                Dashboard
+            <a class="c-sidebar-nav-link" href="{{route('manager.dashboard')}}">
+                List Of Files
             </a>
         </li>
         <li class="c-sidebar-nav-item">
-            <a class="c-sidebar-nav-link c-active"
-               href="{{ route('logout') }}"
-               onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-                {{ __('Logout') }}
+            <a class="c-sidebar-nav-link" href="{{route('manager.show-staffs')}}">
+                List Of Staff
             </a>
         </li>
-{{--       s--}}
+     
     </ul>
-    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-        @csrf
-    </form>
+    
 </div>

@@ -14,14 +14,14 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.24/af-2.3.6/b-1.7.0/fc-3.3.2/fh-3.1.8/kt-2.6.1/sb-1.0.1/sp-1.2.2/sl-1.3.3/datatables.min.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap5.min.css"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
     <title>{{ config('app.name', 'Laravel') }}</title>
 </head>
 <body class="c-app">
 @include('components.admin.sidebar')
 
 <div class="c-wrapper">
-    <header class="c-header c-header-light c-header-fixed">
-    </header>
+    @include('components.navbar')
     <div class="c-body">
         <main class="c-main">
             <div class="container-fluid">
@@ -34,7 +34,6 @@
         <div class="mfs-auto">Powered by&nbsp;<a href="https://coreui.io/pro/">CoreUI Pro</a></div>
     </footer>
 </div>
-{{--<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>--}}
 <!-- Optional JavaScript -->
 <!-- Popper.js first, then CoreUI JS -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

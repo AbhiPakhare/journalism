@@ -31,7 +31,7 @@ class UpdateManagerRequest extends FormRequest
                 'string',
                 'email',
                 'max:255',
-                Rule::unique('users')->ignore($this->user()->id)
+                Rule::unique('users')->ignore(request()->manager_id)
                 ],
         ];
     }

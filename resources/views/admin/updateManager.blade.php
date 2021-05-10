@@ -8,6 +8,7 @@
             <form action="{{ route('admin.manager.update', [$manager, $manager->id]) }}" method="POST">
                 @csrf
                 @method('PUT')
+                <input type="hidden" name="manager_id" value="{{ $manager->id }}">
                 <div class="form-group">
                     <label for="manager name">Name</label>
                     <input type="text" name="name" class="form-control" value="{{$manager->name}}"  placeholder="Enter Name">

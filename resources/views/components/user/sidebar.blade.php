@@ -8,16 +8,22 @@
                 Dashboard
             </a>
         </li>
-        <li class="c-sidebar-nav-item">
-            <a class="c-sidebar-nav-link c-active"
-               href="{{ route('logout') }}"
-               onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-                {{ __('Logout') }}
+        <li class="c-sidebar-nav-dropdown">
+            <a class="c-sidebar-nav-dropdown-toggle" href="#">
+                Journal
             </a>
+            <ul class="c-sidebar-nav-dropdown-items">
+                <li class="c-sidebar-nav-item">
+                    <a class="c-sidebar-nav-link" href="{{ route('user.journal.create') }}">
+                        Create Journal
+                    </a>
+                </li>
+                <li class="c-sidebar-nav-item">
+                    <a class="c-sidebar-nav-link" href="{{ route('user.journal.index') }}">
+                        Submitted Journal
+                    </a>
+                </li>
+            </ul>
         </li>
-{{--       s--}}
     </ul>
-    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-        @csrf
-    </form>
 </div>
