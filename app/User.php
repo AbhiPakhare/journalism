@@ -49,7 +49,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Get all of the categories for the post.
+     * Get all of the categories for the user.
      */
     public function categories(): \Illuminate\Database\Eloquent\Relations\MorphToMany
     {

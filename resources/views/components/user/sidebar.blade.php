@@ -19,7 +19,7 @@
                     </a>
                 </li>
                 <li class="c-sidebar-nav-item">
-                    <a class="c-sidebar-nav-link" href="#">
+                    <a class="c-sidebar-nav-link" href="{{ route('user.journal.index') }}">
                         Submitted Journal
                     </a>
                 </li>

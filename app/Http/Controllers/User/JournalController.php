@@ -17,7 +17,11 @@ class JournalController extends Controller
      */
     public function index()
     {
-        
+        $journals = Journal::where('user_id', auth()->user()->id)
+                            ->latest()
+                            ->paginate(10);
+        // dd($journals->toArray());
+        return view('user.showJournal', compact('journals'));
     }
 
     /**
@@ -100,7 +104,7 @@ class JournalController extends Controller
      */
     public function show(Journal $journal)
     {
-        //
+
     }
 
     /**
