@@ -56,4 +56,10 @@ class User extends Authenticatable
         return $this->morphToMany('App\Category', 'categorizable')->withTimestamps();
     }
 
+    //Get Phone Number for user
+    public function phone()
+    {
+        return $this->hasOne(Phone::class);
+    }
+
 }
