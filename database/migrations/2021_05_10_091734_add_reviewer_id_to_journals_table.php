@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddJournalIdToUsersTable extends Migration
+class AddReviewerIdToJournalsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddJournalIdToUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->unsignedInteger('journal_id')->nullable();
+        Schema::table('journals', function (Blueprint $table) {
+            $table->unsignedInteger('reviewer_id')->after('user_id')->nullable();
         });
     }
 
@@ -25,8 +25,8 @@ class AddJournalIdToUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('journal_id');
+        Schema::table('journals', function (Blueprint $table) {
+            $table->dropColumn('reviewer_id');
         });
     }
 }

@@ -18,9 +18,8 @@ class JournalController extends Controller
     public function index()
     {
         $journals = Journal::where('user_id', auth()->user()->id)
-                            ->latest()
-                            ->paginate(10);
-        // dd($journals->toArray());
+            ->latest()
+            ->paginate(10);
         return view('user.showJournal', compact('journals'));
     }
 
@@ -45,23 +44,22 @@ class JournalController extends Controller
     public function store(Request $request){
         $reference_id = time();
         $journal = Journal::firstOrCreate([
-                                'user_id' => auth()->user()->id,
-                                'reference_id' => $reference_id
-                            ]);
-
+            'user_id' => auth()->user()->id,
+            'reference_id' => $reference_id
+        ]);
         $journal->addMedia(storage_path('app/journal/temp/title.pdf'))
-                ->toMediaCollection();
-                    
+            ->toMediaCollection();
+
         $journal->addMedia(storage_path('app/journal/temp/content.pdf'))
-                ->toMediaCollection();
+            ->toMediaCollection();
 
         $journal->addMedia(storage_path('app/journal/temp/paper.pdf'))
-                ->toMediaCollection();
+            ->toMediaCollection();
 
         $journal->addMedia(storage_path('app/journal/temp/bibliography.pdf'))
-                ->toMediaCollection();    
-        
-        $journal->categories()->sync([$request->category]);        
+            ->toMediaCollection();
+
+        $journal->categories()->sync([$request->category]);
         if($journal) {
             $journal->user->notify(new ReferencesIdCreated($journal->user, $reference_id));
             return redirect()->route('user.dashboard');
@@ -93,7 +91,7 @@ class JournalController extends Controller
 
     }
 
-    
+
 
 
     /**

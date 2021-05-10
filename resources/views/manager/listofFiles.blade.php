@@ -10,22 +10,20 @@
                 </h4>
             </div>
             <table class="table " id="datatable">
-
                 <thead>
                     <tr>
-                        <th>Name Of Files</th>
-                        <th>Reference_No.</th>
+                        <th>Name Of File</th>
+                        <th>Reference No</th>
                         <th>Categories</th>
+                        <th>Submitted on</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
                 <tfoot>
                 <tr>
-                    <th>Name of Files</th>
-                    <th>Reference_No.</th>
-                    <th>Categories</th>
-                    <th>Action</th>
+                    <th>Name of File</th>
+                    <th>Reference No</th>
                 </tr>
                 </tfoot>
             </table>
@@ -39,15 +37,16 @@
         $(document).ready( function () {
             $('#datatable').DataTable({
                 "processing": true,
-                "lengthMenu": [10],
+                "bLengthChange" : false,
                 "serverSide": true,
                 responsive : true,
                 "ajax": "{{ route('manager.list-of-files') }}",
                 "columns": [
-                    {data: 'File Name', name: 'File Name'}, // index 0
-                    {data: 'reference_id.', name: 'reference_id.'}, // index 1
+                    {data: 'file_name', name: 'file_name'}, // index 0
+                    {data: 'reference_id', name: 'reference_id'}, // index 1
                     {data: 'categories', name: 'categories'}, // index 2
-                    {data: 'action', name: 'action'}, // index 3
+                    {data: 'created_at', name: 'created_at'},//index 3
+                    {data: 'action', name: 'action'}, // index 4
                 ],
                 initComplete: function () {
                     this.api().columns().every(function () {
@@ -55,13 +54,13 @@
                         var input = document.createElement("input");
                         input.placeholder = "Search by Column"
                         $(input).appendTo($(column.footer()).empty())
-                        .on('change', function () {
+                        .on('keyup change', function () {
                             column.search($(this).val()).draw();
                         });
                     });
                 },
                 'columnDefs': [ {
-                    'targets': [0,1,2,3], /* column index */
+                    'targets': [0,1,2,4], /* column index */
                     'orderable': false, /* true or false */
                 }]
 

@@ -54,7 +54,7 @@
                         var input = document.createElement("input");
                         input.placeholder = "Search by Column"
                         $(input).appendTo($(column.footer()).empty())
-                        .on('change', function () {
+                        .on('keyup change', function () {
                             column.search($(this).val()).draw();
                         });
                     });

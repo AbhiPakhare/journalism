@@ -8,6 +8,8 @@ use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\User;
+use App\Category;
 
 class Journal extends Model implements HasMedia
 {
@@ -24,7 +26,7 @@ class Journal extends Model implements HasMedia
     /**
      * Get the user that owns the phone.
      */
-    public function user()
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class);
     }
@@ -32,17 +34,17 @@ class Journal extends Model implements HasMedia
     /**
      * Get all of the categories for the journal.
      */
-    public function categories()
+    public function categories(): \Illuminate\Database\Eloquent\Relations\MorphToMany
     {
-        return $this->morphToMany('App\Category', 'categorizable')->withTimestamps();
+        return $this->morphToMany(Category::class, 'categorizable')->withTimestamps();
     }
 
     /**
-     * Get the reviewer that has the journal.
+     * Get the reviewer for the journal.
      */
-    public function reviewer()
+    public function reviewer(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo(User::class);
     }
 
 }
