@@ -22,10 +22,6 @@ class ListingController extends Controller
             ->select('id','reference_id','reviewer_id','created_at')
             ->whereNull('reviewer_id');
         return datatables()->eloquent($files_names)
-            ->addColumn('file_name',function(Journal $files_names){
-                $paper = $files_names->getMedia()[2]['file_name'];
-                return $paper ? $paper : '';
-            })
             ->editColumn('created_at', function($manager) {
                 return $manager->created_at ? with(new Carbon($manager->created_at))->format('d/M/Y') : '';
             })
