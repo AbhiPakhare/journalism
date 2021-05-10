@@ -8,16 +8,7 @@
                 Dashboard
             </a>
         </li>
-        <li class="c-sidebar-nav-item">
-            <a class="c-sidebar-nav-link c-active"
-               href="{{ route('logout') }}"
-               onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-                {{ __('Logout') }}
-            </a>
-        </li>
-{{--       s--}}
+      
     </ul>
-    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-        @csrf
-    </form>
+   
 </div>

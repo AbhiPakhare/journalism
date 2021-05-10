@@ -11,16 +11,15 @@
 
     <!-- CoreUI CSS -->
     <link rel="stylesheet" href="https://unpkg.com/@coreui/coreui/dist/css/coreui.min.css" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 </head>
 <body class="c-app">
-@include('components.sidebar')
+@include('components.reviewer.sidebar')
 
 <div class="c-wrapper">
-    <header class="c-header c-header-light c-header-fixed">
-    </header>
+    @include('components.navbar')
     <div class="c-body">
         <main class="c-main">
             <div class="container-fluid">
