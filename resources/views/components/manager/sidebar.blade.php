@@ -9,7 +9,7 @@
             </a>
         </li>
         <li class="c-sidebar-nav-item">
-            <a class="c-sidebar-nav-link" href="{{route('manager.list-of-staff')}}">
+            <a class="c-sidebar-nav-link" href="{{route('manager.show-staffs')}}">
                 List Of Staff
             </a>
         </li>

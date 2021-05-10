@@ -14,7 +14,7 @@ class Journal extends Model implements HasMedia
     use SoftDeletes;
     use HasMediaTrait;
     use notifiable;
-    
+
     public const APPROVED = "Approved";
     public const WAITING = "Waiting";
     public const REJECTED = "Rejected";
@@ -35,6 +35,14 @@ class Journal extends Model implements HasMedia
     public function categories()
     {
         return $this->morphToMany('App\Category', 'categorizable')->withTimestamps();
+    }
+
+    /**
+     * Get the reviewer that has the journal.
+     */
+    public function reviewer()
+    {
+        return $this->belongsTo('App\User');
     }
 
 }

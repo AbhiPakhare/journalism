@@ -14,7 +14,8 @@
                 <thead>
                     <tr>
                         <th>Name Of Files</th>
-                        <th>Category</th>
+                        <th>Reference_No.</th>
+                        <th>Categories</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -22,7 +23,9 @@
                 <tfoot>
                 <tr>
                     <th>Name of Files</th>
-                    <th>Category</th>
+                    <th>Reference_No.</th>
+                    <th>Categories</th>
+                    <th>Action</th>
                 </tr>
                 </tfoot>
             </table>
@@ -36,13 +39,15 @@
         $(document).ready( function () {
             $('#datatable').DataTable({
                 "processing": true,
+                "lengthMenu": [10],
                 "serverSide": true,
                 responsive : true,
                 "ajax": "{{ route('manager.list-of-files') }}",
                 "columns": [
-                    {data: 'Name Of Files', name: 'Name Of Files'}, // index 0
-                    {data: 'Category', name: 'Category'}, // index 1
-                    {data: 'action', name: 'action'}, // index 4
+                    {data: 'File Name', name: 'File Name'}, // index 0
+                    {data: 'reference_id.', name: 'reference_id.'}, // index 1
+                    {data: 'categories', name: 'categories'}, // index 2
+                    {data: 'action', name: 'action'}, // index 3
                 ],
                 initComplete: function () {
                     this.api().columns().every(function () {
@@ -56,7 +61,7 @@
                     });
                 },
                 'columnDefs': [ {
-                    'targets': [0,1,2,4], /* column index */
+                    'targets': [0,1,2,3], /* column index */
                     'orderable': false, /* true or false */
                 }]
 

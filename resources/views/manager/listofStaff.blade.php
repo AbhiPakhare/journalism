@@ -10,13 +10,12 @@
                 </h4>
             </div>
             <table class="table " id="datatable">
-
                 <thead>
                     <tr>
                         <th>Name Of Staff</th>
                         <th>Email</th>
                         <th>Category</th>
-                        <th>Action</th>
+                        <th>Role</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -39,13 +38,14 @@
             $('#datatable').DataTable({
                 "processing": true,
                 "serverSide": true,
+                "lengthMenu": [10],
                 responsive : true,
-                "ajax": "{{ route('manager.list-of-staff') }}",
+                "ajax": "{{ route('manager.list-of-staffs') }}",
                 "columns": [
-                    {data: 'Name Of Staff', name: 'Name Of Staff'}, // index 0
-                    {data: 'Email', name: 'Email'}, // index 1
-                    {data: 'Category', name: 'Category'}, // index 2
-                    {data: 'action', name: 'action'}, // index 4
+                    {data: 'name', name: 'name'}, // index 0
+                    {data: 'email', name: 'email'}, // index 1
+                    {data: 'categories', name: 'categories'}, // index 2
+                    {data: 'role', name: 'role'}, // index 3
                 ],
                 initComplete: function () {
                     this.api().columns().every(function () {
@@ -59,17 +59,11 @@
                     });
                 },
                 'columnDefs': [ {
-                    'targets': [0,1,2,4], /* column index */
+                    'targets': [0,1,2,3], /* column index */
                     'orderable': false, /* true or false */
                 }]
 
             });
         });
-        drawCallback: function() {
-           $('.dt-select2').select2();
-
-
-
-})
     </script>
 @endpush

@@ -56,4 +56,12 @@ class User extends Authenticatable
         return $this->morphToMany('App\Category', 'categorizable')->withTimestamps();
     }
 
+    /**
+     * Get the journals for the user.
+     */
+    public function journal()
+    {
+        return $this->hasMany('App\Journal');
+    }
+
 }
