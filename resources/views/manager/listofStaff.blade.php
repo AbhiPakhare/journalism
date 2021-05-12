@@ -1,7 +1,7 @@
 @extends('layouts.manager.app')
 @push('css')
     <style>
-        
+
     </style>
 @endpush
 
@@ -22,10 +22,10 @@
                         <select class="form-control" id="exampleFormControlSelect1" name="categories">
                           <option value="clear">--Select Category--</option>
                           @foreach ($categories as $category)
-                            <option value="{{ $category->id }}">{{ $category->name }}</option>  
+                            <option value="{{ $category->id ?? old($category->id) }}">{{ $category->name }}</option>
                           @endforeach
-            
                         </select>
+                        <a class="btn btn-info" href="{{route('manager.show-staffs')}}">Reset</a>
                       </div>
                       <div class="col-md-6">
                         <button type="submit">Search</button>
@@ -46,7 +46,7 @@
               </thead>
               <tbody>
                   @foreach ($reviewers as $reviewer)
-                    <tr>    
+                    <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $reviewer->name }}</td>
                         <td>{{ $reviewer->email }}</td>
@@ -54,9 +54,11 @@
                         <td>{{ $reviewer->role->name }}</td>
                     </tr>
                 @endforeach
-                
+
               </tbody>
         </table>
+
+        {{$reviewers->links()}}
     </div>
 </div>
     {{-- <div class="card">

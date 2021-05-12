@@ -19,7 +19,7 @@ class ListingController extends Controller
 
     public function listOfFiles(Request $request)
     {
-        
+
         $files_names = Journal::with('categories:id,name')
             ->select('id','reference_id','reviewer_id','created_at','status')
             ->whereNull('reviewer_id');
@@ -51,7 +51,7 @@ class ListingController extends Controller
             ->select('id','name','email')
             ->when(request()->has('categories'), function($query) {
                 $query->whereHas('categories', function($query){
-                    if (!request()->catgegories == "clear") {
+                    if (request()->categories !== "clear") {
                         $query->where('categories.id', request()->categories);
                     }
                 });
@@ -59,8 +59,9 @@ class ListingController extends Controller
             ->whereHas('role', function ($query) {
                 $query->where('name', Role::REVIEWER);
             })
-            ->get();
-        $categories = Category::all();            
+            ->paginate(2)
+            ->appends(request()->query());
+        $categories = Category::all();
         return view('manager.listofStaff', compact('reviewers', 'categories'));
     }
 
@@ -71,7 +72,7 @@ class ListingController extends Controller
         //     ->whereHas('role', function ($query) {
         //         $query->where('name', Role::REVIEWER);
         //     });
-        
+
         // return view('manager.listofStaff', $reviewers);
         // return datatables()->eloquent($reviewers)
         //     ->addColumn('role', function (User $reviewers) {
