@@ -61,6 +61,11 @@
                 </li>
             </ul>
         </li>
+        <li class="c-sidebar-nav-item">
+            <a class="c-sidebar-nav-link" href="{{ route('admin.list-of-users') }}">
+                List of Users
+            </a>
+        </li>
       
     </ul>
 

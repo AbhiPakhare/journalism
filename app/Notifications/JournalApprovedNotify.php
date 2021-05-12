@@ -16,7 +16,7 @@ class JournalApprovedNotify extends Notification
      *
      * @return void
      */
-    public function __construct($user, $status, $referenece_id)
+    public function __construct($user, $status, $reference_id)
     {
         $this->user = $user;
         $this->status = $status;

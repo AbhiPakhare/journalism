@@ -62,7 +62,7 @@ class User extends Authenticatable
     /**
      * Get the journals for the user.
      */
-    public function journal(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function journal()
     {
         return $this->hasMany(Journal::class);
     }
@@ -70,7 +70,7 @@ class User extends Authenticatable
     /**
      * Get the assigned journals for the reviewer post.
      */
-    public function assignedJournal(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function assignedJournal()
     {
         return $this->hasMany(Journal::class, 'reviewer_id','id');
     }

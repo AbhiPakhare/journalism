@@ -51,8 +51,9 @@ class JournalStatusNotify extends Notification
                     
         }else if($this->status == 'Rejected'){
             return (new MailMessage)
-                    ->subject("Your journal with reference Id ". $this->reference_id. " has been " .$this->status)
-                    ->line("The reason : ".$this->reason);
+            ->subject('Reference ID :'.$this->reference_id.' Status : '. $this->status)
+            ->line("Reasons:")
+            ->line($this->reason ? $this->reason : "");
         }
     }
 

@@ -16,23 +16,20 @@
         </div>
         <div class="row pl-3">
             <div class="col-md-6">
-                <form action="{{ route('manager.show-staffs') }}" method="GET">
-                    <div class="form-group">
-                        <label for="exampleFormControlSelect1">Sort by categories</label>
-                        <select class="form-control" id="exampleFormControlSelect1" name="categories">
+                <form class="form-inline" action="{{ route('manager.show-staffs') }}" method="GET">
+                    <div class="form-group mb-2">
+                        <label for="exampleFormControlSelect1 mr-2">Sort by categories: </label>
+                        <select class="form-control ml-2" id="exampleFormControlSelect1" name="categories">
                           <option value="clear">--Select Category--</option>
                           @foreach ($categories as $category)
                             <option value="{{ $category->id ?? old($category->id) }}">{{ $category->name }}</option>
                           @endforeach
                         </select>
-                        <a class="btn btn-info" href="{{route('manager.show-staffs')}}">Reset</a>
+                        <button class="btn btn-primary mb-2 mt-2 ml-4" type="submit">Search</button>
+                        <a class="btn btn-info mx-sm-4 mb-2 mt-2" href="{{route('manager.show-staffs')}}">Reset</a>
                       </div>
-                      <div class="col-md-6">
-                        <button type="submit">Search</button>
-                    </div>
                 </form>
-            </div>
-
+            </div> 
         </div>
         <table class="table table-hover">
             <thead>
@@ -57,8 +54,9 @@
 
               </tbody>
         </table>
-
-        {{$reviewers->links()}}
+        <div class="paginate ml-2">
+            {{$reviewers->links()}}
+        </div>
     </div>
 </div>
     {{-- <div class="card">

@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Reviewer;
 
-use App\Http\Controllers\Controller;
 use App\Journal;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use App\Http\Controllers\Controller;
+use App\Notifications\JournalStatusNotify;
+use App\Notifications\JournalApprovedNotify;
 
 class JournalController extends Controller
 {
@@ -92,6 +94,12 @@ class JournalController extends Controller
         $journal->reason = $request->reason ?? null;
         $journal->save();
 
+        if($request->status == 'Approved'){
+            $journal->user->notify(new JournalApprovedNotify($journal->user, $request->status, $journal->reference_id));
+        }else{
+            $journal->user->notify(new JournalStatusNotify($journal->user, $request->status , $journal->reference_id, $request->reason));
+        }
+        
         return redirect()->route('reviewer.journal.edit', compact('journal'));
     }
 
