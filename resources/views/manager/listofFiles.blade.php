@@ -14,6 +14,7 @@
                     <tr>
                         <th>Reference No</th>
                         <th>Categories</th>
+                        <th>Status</th>
                         <th>Submitted on</th>
                         <th>Action</th>
                     </tr>
@@ -23,6 +24,7 @@
                 <tr>
                     <th>Reference No</th>
                     <th>Categories</th>
+                    <th>Status</th>
                 </tr>
                 </tfoot>
             </table>
@@ -34,7 +36,7 @@
 @push('scripts')
     <script>
         $(document).ready( function () {
-            $('#datatable').DataTable({
+           let oTable =  $('#datatable').DataTable({
                 "processing": true,
                 "bLengthChange" : false,
                 "serverSide": true,
@@ -43,6 +45,7 @@
                 "columns": [
                     {data: 'reference_id', name: 'reference_id'}, // index 0
                     {data: 'categories', name: 'categories'}, // index 1
+                    {data: 'status', name: 'status'},//index 2
                     {data: 'created_at', name: 'created_at'},//index 2
                     {data: 'action', name: 'action'}, // index 3
                 ],
@@ -64,6 +67,5 @@
 
             });
         });
-
     </script>
 @endpush

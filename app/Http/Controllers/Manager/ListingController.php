@@ -16,10 +16,10 @@ class ListingController extends Controller
         return view('manager.listofFiles');
     }
 
-    public function listOfFiles()
+    public function listOfFiles(Request $request)
     {
         $files_names = Journal::with('categories:id,name')
-            ->select('id','reference_id','reviewer_id','created_at')
+            ->select('id','reference_id','reviewer_id','created_at','status')
             ->whereNull('reviewer_id');
         return datatables()->eloquent($files_names)
             ->editColumn('created_at', function($manager) {

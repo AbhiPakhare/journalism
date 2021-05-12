@@ -19,7 +19,7 @@ class ReviewerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(): \Illuminate\Http\Response
+    public function index()
     {
         return view('admin.listOfReviewers');
     }
@@ -27,9 +27,9 @@ class ReviewerController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return
      */
-    public function create(): \Illuminate\Http\Response
+    public function create()
     {
         $categories = Category::select('id','name')->get();
         return view('admin.createReviewer', compact('categories'));
@@ -71,7 +71,7 @@ class ReviewerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreReviewerRequest $request): \Illuminate\Http\Response
+    public function store(StoreReviewerRequest $request)
     {
         $reviewer = User::create([
             'name' => $request->name,
@@ -95,7 +95,7 @@ class ReviewerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id): \Illuminate\Http\Response
+    public function show($id)
     {
         //
     }
@@ -106,7 +106,7 @@ class ReviewerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id): \Illuminate\Http\Response
+    public function edit($id)
     {
         $reviewer = User::with('categories')->findOrFail($id);
 
@@ -141,7 +141,7 @@ class ReviewerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id): \Illuminate\Http\Response
+    public function destroy($id)
     {
         $reviewer = User::findOrFail($id);
         $reviewer->delete();

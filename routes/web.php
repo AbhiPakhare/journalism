@@ -63,6 +63,7 @@ Route::group([
     'middleware' => ['auth','can:reviewer']
 ], function () {
     Route::view('/dashboard', 'home')->name('dashboard');
+    Route::resource('journal', 'Reviewer\JournalController');
 });
 
 Route::group([
