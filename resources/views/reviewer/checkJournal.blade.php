@@ -73,8 +73,22 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="form-group row reason" style="display: none">
+                @if (in_array($journal->status,["Waiting", 'Rejected'] ))    
+                    <div class="form-group row reason"  style="display: block" >
+                        <label class="col-md-3 col-form-label" for="textarea-input">Reason</label>
+                        <div class="col-md-9">
+                            <textarea
+                                class="form-control"
+                                id="textarea-input"
+                                name="reason"
+                                rows="5"
+                                placeholder="Ex: Spelling mistake on page no 2"
+                                >
+                            </textarea>
+                        </div>
+                    </div>
+                @else
+                <div class="form-group row reason"  style="display: none" >
                     <label class="col-md-3 col-form-label" for="textarea-input">Reason</label>
                     <div class="col-md-9">
                         <textarea
@@ -87,6 +101,7 @@
                         </textarea>
                     </div>
                 </div>
+                @endif
                 <div class="form-group">
                     <button class="btn btn-info btn-lg btn-block" type="submit">Verify Journal</button>
                 </div>

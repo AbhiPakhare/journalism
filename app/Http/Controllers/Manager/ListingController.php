@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Manager;
 
-use App\Http\Controllers\Controller;
-use App\Journal;
 use App\Role;
 use App\User;
+use App\Journal;
+use App\Category;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class ListingController extends Controller
 {
@@ -46,34 +47,48 @@ class ListingController extends Controller
 
     public function showStaff()
     {
-        return view('manager.listofStaff');
+        $reviewers = User::with(['role','categories:id,name'])
+            ->select('id','name','email')
+            ->when(request()->has('categories'), function($query) {
+                $query->whereHas('categories', function($query){
+                    if (!request()->catgegories == "clear") {
+                        $query->where('categories.id', request()->categories);
+                    }
+                });
+            })
+            ->whereHas('role', function ($query) {
+                $query->where('name', Role::REVIEWER);
+            })
+            ->get();
+        $categories = Category::all();            
+        return view('manager.listofStaff', compact('reviewers', 'categories'));
     }
 
     public function listOfStaff()
     {
-        $reviewers = User::with(['role','categories:id,name'])
-            ->select('id','name','email')
-            ->whereHas('role', function ($query) {
-                $query->where('name', Role::REVIEWER);
-            });
+        // $reviewers = User::with(['role','categories:id,name'])
+        //     ->select('id','name','email')
+        //     ->whereHas('role', function ($query) {
+        //         $query->where('name', Role::REVIEWER);
+        //     });
+        
+        // return view('manager.listofStaff', $reviewers);
+        // return datatables()->eloquent($reviewers)
+        //     ->addColumn('role', function (User $reviewers) {
+        //         return $reviewers->role ? $reviewers->role->name : '';
+        //     })
 
+        //     ->addColumn('categories', function (User $reviewer) {
+        //         $categories = $reviewer->categories->pluck('name');
+        //         $all_categories = [];
+        //         foreach ($categories as $category) {
+        //             array_push($all_categories, "<span class='badge rounded-pill bg-dark text-white'>$category</span>");
+        //         }
+        //         return implode(" ",$all_categories);
 
-        return datatables()->eloquent($reviewers)
-            ->addColumn('role', function (User $reviewers) {
-                return $reviewers->role ? $reviewers->role->name : '';
-            })
-
-            ->addColumn('categories', function (User $reviewer) {
-                $categories = $reviewer->categories->pluck('name');
-                $all_categories = [];
-                foreach ($categories as $category) {
-                    array_push($all_categories, "<span class='badge rounded-pill bg-dark text-white'>$category</span>");
-                }
-                return implode(" ",$all_categories);
-
-            })
-            ->escapeColumns('categories')
-            ->toJson();
+        //     })
+        //     ->escapeColumns('categories')
+        //     ->toJson();
     }
 
     public function showJournal($id)

@@ -1,8 +1,65 @@
 @extends('layouts.manager.app')
+@push('css')
+    <style>
+        
+    </style>
+@endpush
 
 @section('content')
 
-    <div class="card">
+<div class="card">
+    <div class="class-body">
+        <div class="card-header">
+            <h4>
+                List of Staff
+            </h4>
+        </div>
+        <div class="row pl-3">
+            <div class="col-md-6">
+                <form action="{{ route('manager.show-staffs') }}" method="GET">
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">Sort by categories</label>
+                        <select class="form-control" id="exampleFormControlSelect1" name="categories">
+                          <option value="clear">--Select Category--</option>
+                          @foreach ($categories as $category)
+                            <option value="{{ $category->id }}">{{ $category->name }}</option>  
+                          @endforeach
+            
+                        </select>
+                      </div>
+                      <div class="col-md-6">
+                        <button type="submit">Search</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Name Of Staff</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Category</th>
+                  <th scope="col">Role</th>
+                </tr>
+              </thead>
+              <tbody>
+                  @foreach ($reviewers as $reviewer)
+                    <tr>    
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $reviewer->name }}</td>
+                        <td>{{ $reviewer->email }}</td>
+                        <td>{{ $reviewer->categories ? implode(', ',$reviewer->categories->pluck('name')->toArray()) :"asdsadas" }}</td>
+                        <td>{{ $reviewer->role->name }}</td>
+                    </tr>
+                @endforeach
+                
+              </tbody>
+        </table>
+    </div>
+</div>
+    {{-- <div class="card">
         <div class="card-body">
             <div class="card-header">
                 <h4 >
@@ -29,10 +86,10 @@
             </table>
 
         </div>
-    </div>
+    </div> --}}
 @endsection
 
-@push('scripts')
+{{-- @push('scripts')
     <script>
         $(document).ready( function () {
             $('#datatable').DataTable({
@@ -66,4 +123,4 @@
             });
         });
     </script>
-@endpush
+@endpush --}}
