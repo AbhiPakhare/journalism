@@ -18,6 +18,7 @@ class ListingController extends Controller
 
     public function listOfFiles(Request $request)
     {
+        
         $files_names = Journal::with('categories:id,name')
             ->select('id','reference_id','reviewer_id','created_at','status')
             ->whereNull('reviewer_id');
