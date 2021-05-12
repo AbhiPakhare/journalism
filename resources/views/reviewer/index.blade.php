@@ -36,4 +36,4 @@
             </table>
         </div>
     </div>
-@endsectionō
+@endsection

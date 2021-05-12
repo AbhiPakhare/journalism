@@ -53,7 +53,6 @@ Route::group([
     Route::get('/show-files','Manager\ListingController@showFiles')->name('show-files');
     Route::get('/list-of-files','Manager\ListingController@listOfFiles')->name('list-of-files');
     Route::get('/show-staffs','Manager\ListingController@showStaff')->name('show-staffs');
-    Route::get('/list-of-staffs','Manager\ListingController@listOfStaff')->name('list-of-staffs');
 });
 
 /*

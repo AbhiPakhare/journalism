@@ -65,32 +65,6 @@ class ListingController extends Controller
         return view('manager.listofStaff', compact('reviewers', 'categories'));
     }
 
-    public function listOfStaff()
-    {
-        // $reviewers = User::with(['role','categories:id,name'])
-        //     ->select('id','name','email')
-        //     ->whereHas('role', function ($query) {
-        //         $query->where('name', Role::REVIEWER);
-        //     });
-
-        // return view('manager.listofStaff', $reviewers);
-        // return datatables()->eloquent($reviewers)
-        //     ->addColumn('role', function (User $reviewers) {
-        //         return $reviewers->role ? $reviewers->role->name : '';
-        //     })
-
-        //     ->addColumn('categories', function (User $reviewer) {
-        //         $categories = $reviewer->categories->pluck('name');
-        //         $all_categories = [];
-        //         foreach ($categories as $category) {
-        //             array_push($all_categories, "<span class='badge rounded-pill bg-dark text-white'>$category</span>");
-        //         }
-        //         return implode(" ",$all_categories);
-
-        //     })
-        //     ->escapeColumns('categories')
-        //     ->toJson();
-    }
 
     public function showJournal($id)
     {

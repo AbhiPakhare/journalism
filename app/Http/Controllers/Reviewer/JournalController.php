@@ -100,7 +100,7 @@ class JournalController extends Controller
             $journal->user->notify(new JournalStatusNotify($journal->user, $request->status , $journal->reference_id, $request->reason));
         }
         
-        return redirect()->route('reviewer.journal.edit', compact('journal'));
+        return redirect()->route('reviewer.journal.index');
     }
 
     /**
