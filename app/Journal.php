@@ -26,7 +26,7 @@ class Journal extends Model implements HasMedia
     /**
      * Get the user that owns the phone.
      */
-    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
@@ -42,7 +42,7 @@ class Journal extends Model implements HasMedia
     /**
      * Get the reviewer for the journal.
      */
-    public function reviewer(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function reviewer()
     {
         return $this->belongsTo(User::class);
     }

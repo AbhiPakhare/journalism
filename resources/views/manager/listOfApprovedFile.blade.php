@@ -6,7 +6,7 @@
         <div class="card-body">
             <div class="card-header">
                 <h4 >
-                    List Of Submitted Journals
+                    List of Approved Journals
                 </h4>
             </div>
             <table class="table " id="datatable">
@@ -16,7 +16,8 @@
                         <th>Status</th>
                         <th>Categories</th>
                         <th>Submitted By</th>
-                        <th>Submitted on</th>
+                        <th>Submitted On</th>
+                        <th>Reviewed By</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -41,14 +42,15 @@
                 "bLengthChange" : false,
                 "serverSide": true,
                 responsive : true,
-                "ajax": "{{ route('manager.list-of-files') }}",
+                "ajax": "{{ route('manager.approved-journals') }}",
                 "columns": [
                     {data: 'reference_id', name: 'reference_id'}, // index 0
                     {data: 'status', name: 'status'},//index 1
                     {data: 'categories', name: 'categories'}, // index 2
                     {data: 'user.name', name: 'user.name'}, // index 3
                     {data: 'created_at', name: 'created_at'},//index 4
-                    {data: 'action', name: 'action'}, // index 5
+                    {data: 'reviewer.name', name: 'reviewer.name'}, // index 5
+                    {data: 'action', name: 'action'}, // index 6
                 ],
                 initComplete: function () {
                     this.api().columns().every(function () {
@@ -62,7 +64,7 @@
                     });
                 },
                 'columnDefs': [ {
-                    'targets': [0,1,2,3,5], /* column index */
+                    'targets': [0,1,2,3,5,6], /* column index */
                     'orderable': false, /* true or false */
                 }]
 

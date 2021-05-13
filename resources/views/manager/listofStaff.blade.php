@@ -38,7 +38,6 @@
                   <th scope="col">Name Of Staff</th>
                   <th scope="col">Email</th>
                   <th scope="col">Category</th>
-                  <th scope="col">Role</th>
                 </tr>
               </thead>
               <tbody>
@@ -48,7 +47,6 @@
                         <td>{{ $reviewer->name }}</td>
                         <td>{{ $reviewer->email }}</td>
                         <td>{{ $reviewer->categories ? implode(', ',$reviewer->categories->pluck('name')->toArray()) :"asdsadas" }}</td>
-                        <td>{{ $reviewer->role->name }}</td>
                     </tr>
                 @endforeach
 

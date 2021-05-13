@@ -3,11 +3,18 @@
         {{ config('app.name', 'Laravel') }}
     </div>
     <ul class="c-sidebar-nav ps ">
+        <li class="c-sidebar-nav-title">Journal</li>
         <li class="c-sidebar-nav-item">
             <a class="c-sidebar-nav-link" href="{{route('manager.dashboard')}}">
-                List Of Files
+                Submitted Journals
             </a>
         </li>
+        <li class="c-sidebar-nav-item">
+            <a class="c-sidebar-nav-link" href="{{route('manager.show-approved-journals')}}">
+                Approved Journals
+            </a>
+        </li>
+        <li class="c-sidebar-nav-title">Staff</li>
         <li class="c-sidebar-nav-item">
             <a class="c-sidebar-nav-link" href="{{route('manager.show-staffs')}}">
                 List Of Staff

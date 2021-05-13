@@ -52,6 +52,8 @@ Route::group([
     Route::view('/dashboard', 'manager.listofFiles')->name('dashboard');
     Route::get('/show-files','Manager\ListingController@showFiles')->name('show-files');
     Route::get('/list-of-files','Manager\ListingController@listOfFiles')->name('list-of-files');
+    Route::view('/show-approved-journals','manager.listOfApprovedFile')->name('show-approved-journals');
+    Route::get('/approved-journals','Manager\ListingController@approvedJournals')->name('approved-journals');
     Route::get('/show-staffs','Manager\ListingController@showStaff')->name('show-staffs');
 });
 
