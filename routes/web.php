@@ -47,9 +47,9 @@ Route::group([
     'prefix' => 'manager',
     'middleware' => ['auth','can:manager']
 ], function () {
+    Route::get('/dashboard','Manager\ListingController@listOfFiles')->name('dashboard');
     Route::put('journal/assign', 'Manager\ListingController@assignJournal')->name('assign-journal');
     Route::get('journal/{id}/assign', 'Manager\ListingController@showJournal')->name('show-journal');
-    Route::view('/dashboard', 'manager.listofFiles')->name('dashboard');
     Route::get('/show-files','Manager\ListingController@showFiles')->name('show-files');
     Route::get('/list-of-files','Manager\ListingController@listOfFiles')->name('list-of-files');
     Route::view('/show-approved-journals','manager.listOfApprovedFile')->name('show-approved-journals');

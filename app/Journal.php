@@ -34,7 +34,7 @@ class Journal extends Model implements HasMedia
     /**
      * Get all of the categories for the journal.
      */
-    public function categories(): \Illuminate\Database\Eloquent\Relations\MorphToMany
+    public function categories()
     {
         return $this->morphToMany(Category::class, 'categorizable')->withTimestamps();
     }

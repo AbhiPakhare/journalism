@@ -9,31 +9,69 @@
                     List Of Submitted Journals
                 </h4>
             </div>
-            <table class="table " id="datatable">
-                <thead>
+            @if ($journals->count() > 0)
+                <form class="form-inline" action="{{ route('manager.list-of-files') }}" method="GET">
+                    <div class="form-group mb-2">
+                        <label for="exampleFormControlSelect1 mr-2">Sort by categories: </label>
+                        <select class="form-control ml-2" id="exampleFormControlSelect1" name="categories">
+                        <option value="clear">--Select Category--</option>
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->id ?? old($category->id) }}">{{ $category->name }}</option>
+                        @endforeach
+                        </select>
+                        <button class="btn btn-primary mb-2 mt-2 ml-4" type="submit">Search</button>
+                        <a class="btn btn-info mx-sm-4 mb-2 mt-2" href="{{route('manager.list-of-files')}}">Reset</a>
+                    </div>
+                </form>
+                <table class="table " id="datatable">
+                    <thead>
+                        <tr>
+                            <th>Reference No</th>
+                            <th>Status</th>
+                            <th>Categories</th>
+                            <th>Submitted By</th>
+                            <th>Submitted on</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($journals as $journal)
+                        <tr>
+                            <td>{{ $journal->reference_id }}</td>
+                            <td>{{ $journal->status }}</td>
+                            <td>{{ $journal->categories[0]->name }}</td>
+                            <td>{{ $journal->user->name }}</td>
+                            <td>{{ date('d-M-Y', strtotime($journal->created_at)) }}</td>
+                            <td>
+                                <a 
+                                    href="{{ (isset($journal->getMedia()[2])) ? $journal->getMedia()[2]->getUrl() : "No paper uploaded" }}" 
+                                    class="btn btn-info"
+                                    target="_blank">
+                                    View Paper
+                                </a>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                    {{-- <tfoot>
                     <tr>
                         <th>Reference No</th>
                         <th>Status</th>
-                        <th>Categories</th>
-                        <th>Submitted By</th>
-                        <th>Submitted on</th>
-                        <th>Action</th>
                     </tr>
-                </thead>
-                <tbody></tbody>
-                <tfoot>
-                <tr>
-                    <th>Reference No</th>
-                    <th>Status</th>
-                </tr>
-                </tfoot>
-            </table>
-
+                    </tfoot> --}}
+                </table>
+            @else
+                No Journals submitted.
+            @endif
+            <div class="paginate ml-2">
+				{{$journals->links()}}
+			</div>
         </div>
+
     </div>
 @endsection
 
-@push('scripts')
+{{-- @push('scripts')
     <script>
         $(document).ready( function () {
            let oTable =  $('#datatable').DataTable({
@@ -69,4 +107,4 @@
             });
         });
     </script>
-@endpush
+@endpush --}}
