@@ -9,6 +9,10 @@ use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
+    public function dashboard(Request $request)
+    {
+        return view('admin.home');
+    }
     public function listOfUsers()
     {
         $users = User::withCount('journal')
@@ -19,7 +23,7 @@ class UserController extends Controller
         ->latest()
         ->paginate(5);
 
-        
+
         return view('admin.listOfUsers', compact('users'));
     }
 }

@@ -28,12 +28,12 @@ Route::group([
     'prefix' => 'admin',
     'middleware' => ['auth','can:admin']
 ], function () {
-    Route::view('/dashboard', 'admin.home')->name('dashboard');
+    Route::get('/dashboard', 'Admin\UserController@dashboard')->name('dashboard');
     Route::get('/list-of-managers', 'Admin\ManagerController@listOfManagers')->name('list-of-managers');
     Route::get('/list-of-reviewers', 'Admin\ReviewerController@listOfReviewers')->name('list-of-reviewers');
     Route::get('/list-of-categories', 'Admin\CategoryController@listOfCategories')->name('list-of-categories');
     Route::get('/list-of-users', 'Admin\UserController@listOfusers')->name('list-of-users');
-    
+
     Route::resource('manager','Admin\ManagerController');
     Route::resource('category','Admin\CategoryController');
     Route::resource('reviewer','Admin\ReviewerController');

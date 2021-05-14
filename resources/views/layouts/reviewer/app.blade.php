@@ -15,7 +15,15 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap5.min.css"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
     <title>{{ config('app.name', 'Laravel') }}</title>
+    <style>
+        body, html{
+            font-family: 'Roboto', sans-serif;
+            background: white !important;
+        }
+    </style>
 </head>
 <body class="c-app">
 @include('components.reviewer.sidebar')
