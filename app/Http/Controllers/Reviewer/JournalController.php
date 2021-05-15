@@ -96,7 +96,7 @@ class JournalController extends Controller
         $journal->save();
 
         if($request->status == 'Approved'){
-            $journal->user->notify(new JournalApprovedNotify($journal->user, $request->status, $journal->reference_id));
+            $journal->user->notify(new JournalApprovedNotify($journal->user, $id, $request->status, $journal->reference_id));
         }else{
             $journal->user->notify(new JournalStatusNotify($journal->user, $request->status , $journal->reference_id, $request->reason));
         }

@@ -2,15 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Razorpay\Api\Api;
 use Session;
 use Redirect;
+use App\Journal;
+use Razorpay\Api\Api;
+use Illuminate\Http\Request;
+
 class RazorpayController extends Controller
 {
-    public function razorpay()
-    {
-        return view('payment.payment');
+    public function razorpay($id)
+    {	
+		$journal = Journal::with(['user'])->findOrFail($id);
+		if(auth()->user()->id !== $journal->user->id) {
+			return redirect()
+				->route('user.dashboard')
+				->withErrors(['You are not authorized to make payment for this journal']);
+		}
+		
+        return view('payment.payment', compact('journal'));
     }
 
     public function payment(Request $request)

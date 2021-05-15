@@ -11,6 +11,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
+			
             @if($message = Session::get('error'))
                 <div class="alert alert-danger alert-dismissible fade in" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -35,21 +36,21 @@
                     <h2>Pay With Razorpay</h2>
                     <form>
                         <script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_HB0t8bD94Iw1rc" async> </script> </form>
-                    <!-- <div class="panel-body text-center"> -->
-{{--                    <form action="{!!route('payment')!!}" method="POST" >--}}
-{{--                        <script src="https://checkout.razorpay.com/v1/checkout.js"--}}
-{{--                                data-key="{{ env('RAZOR_KEY') }}"--}}
-{{--                                data-amount="1000"--}}
-{{--                                data-buttontext="{{__('₹100')}}"--}}
-{{--                                data-name="Journalism"--}}
-{{--                                data-description="Payment"--}}
-{{--                                data-prefill.name="{{ auth()->user()->name }}"--}}
-{{--                                data-prefill.email="{{ auth()->user()->email }}"--}}
-{{--                                data-prefill.contact="{{ auth()->user()->phone->phone_number }}"--}}
-{{--                                data-theme.color="#3c4b64">--}}
-{{--                        </script>--}}
-{{--                        <input type="hidden" name="_token" value="{!!csrf_token()!!}">--}}
-{{--                    </form>--}}
+                     <div class="panel-body text-center"> 
+                    <form action="{{ route('user.payment') }}" method="POST" >
+                        <script src="https://checkout.razorpay.com/v1/checkout.js"
+                                data-key="{{ env('RAZOR_KEY') }}"
+                                data-amount="1000"
+                                data-buttontext="{{__('₹100')}}"
+                                data-name="Journalism"
+                                data-description="Payment"
+                                data-prefill.name="{{ auth()->user()->name }}"
+                                data-prefill.email="{{ auth()->user()->email }}"
+                                data-prefill.contact="{{ auth()->user()->phone->phone_number }}"
+                                data-theme.color="#3c4b64">
+                       </script>
+                       <input type="hidden" name="_token" value="{!!csrf_token()!!}">
+                   </form>
                 </div>
             </div>
         </div>

@@ -1,6 +1,5 @@
 <?php
 
-use App\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,16 +13,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/home', 'HomeController@index')->name('home');
 
 Auth::routes();
-Route::group(['middleware' => 'auth'], function () {
-    Route::get('razorpay', 'RazorpayController@razorpay')->name('razorpay');
-    Route::post('razorpaypayment', 'RazorpayController@payment')->name('payment');
-});
+// Route::group(['middleware' => 'auth'], function () {
+//     Route::get('razorpay/{$id}', 'RazorpayController@razorpay')->name('razorpay');
+//     Route::post('razorpaypayment', 'RazorpayController@payment')->name('payment');
+// });
+
 /*
  * Admin routes
  * */
@@ -77,10 +78,13 @@ Route::group([
     'prefix' => 'user',
     'middleware' => ['auth','can:user']
 ], function () {
-    Route::view('/dashboard', 'user.home')->name('dashboard');
+	Route::get('/razorpay/{id}', 'RazorpayController@razorpay')->name('razorpay');
+	Route::view('/dashboard', 'user.home')->name('dashboard');
     Route::post('/upload-journal','User\JournalController@storeJournal')->name('upload');
     Route::get('/journals/{status?}','User\JournalController@index')->name('journal.index');
+    Route::post('razorpaypayment', 'RazorpayController@payment')->name('payment');
     Route::resource('journal','User\JournalController');
+	
 });
 
 

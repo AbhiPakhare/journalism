@@ -16,9 +16,10 @@ class JournalApprovedNotify extends Notification
      *
      * @return void
      */
-    public function __construct($user, $status, $reference_id)
+    public function __construct($user, $id, $status, $reference_id)
     {
         $this->user = $user;
+        $this->id = $id;
         $this->status = $status;
         $this->reference_id = $reference_id;
     }
@@ -46,7 +47,7 @@ class JournalApprovedNotify extends Notification
                     ->subject('Journal Reference ID '.$this->status)
                     ->line('The journal with'.$this->reference_id.' has been '.$this->status)
                     ->line('Please pay the ₹600 through link given below.')
-                    ->action('Payment', url('/'));
+                    ->action('Payment', url('user/razorpay/'.$this->id));
     }
 
     /**
