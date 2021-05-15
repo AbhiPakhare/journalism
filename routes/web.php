@@ -20,6 +20,10 @@ Route::get('/', function () {
 Route::get('/home', 'HomeController@index')->name('home');
 
 Auth::routes();
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('razorpay', 'RazorpayController@razorpay')->name('razorpay');
+    Route::post('razorpaypayment', 'RazorpayController@payment')->name('payment');
+});
 /*
  * Admin routes
  * */
