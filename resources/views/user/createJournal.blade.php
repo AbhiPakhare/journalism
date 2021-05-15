@@ -9,12 +9,7 @@
       <div class="card-header">
         <h3>File Upload</h3>
       </div>
-{{--       
-      @if (!empty($journal))
-          @foreach ($journal->getMedia() as $media)
-              <a href="{{ $media->getUrl() }}">{{ $media->name }} {{ $media }}</a>
-          @endforeach
-      @endif --}}
+      
       <div class="card-body">
         <form action="{{ route('user.journal.store') }}" method="POST" enctype="multipart/form-data">
           @csrf

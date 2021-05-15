@@ -24,10 +24,10 @@
                         <td>{{ $journal->reference_id }}</td>
                         <td>{{ date('d-M-Y', strtotime($journal->created_at))  }}</td>
                         <td>
-                            @if(!empty($journal->getMedia()[2]->getUrl()))
-                                <a href="{{$journal->getMedia()[2]->getUrl()}}" target="_blank" class="btn btn-primary text-white">View Paper</a>
+                            @if(!empty($journal->getMedia()[3]->getUrl()))
+                                <a href="{{$journal->getMedia()[3]->getUrl()}}" target="_blank" class="btn btn-primary text-white">View Paper</a>
                             @endif
-                            <a href="{{route('reviewer.journal.edit', $journal)}}" class="btn btn-info" target="_blank" >Check Journal</a>
+                            <a href="{{route('reviewer.journal.edit', $journal)}}" class="btn btn-info" >Check Journal</a>
                         </td>
                     </tr>
 

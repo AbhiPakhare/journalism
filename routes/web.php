@@ -50,7 +50,6 @@ Route::group([
     Route::get('/dashboard','Manager\ListingController@listOfFiles')->name('dashboard');
     Route::put('journal/assign', 'Manager\ListingController@assignJournal')->name('assign-journal');
     Route::get('journal/{id}/assign', 'Manager\ListingController@showJournal')->name('show-journal');
-    Route::get('/show-files','Manager\ListingController@showFiles')->name('show-files');
     Route::get('/list-of-files','Manager\ListingController@listOfFiles')->name('list-of-files');
     Route::view('/show-approved-journals','manager.listOfApprovedFile')->name('show-approved-journals');
     Route::get('/approved-journals','Manager\ListingController@approvedJournals')->name('approved-journals');
@@ -76,6 +75,7 @@ Route::group([
 ], function () {
     Route::view('/dashboard', 'user.home')->name('dashboard');
     Route::post('/upload-journal','User\JournalController@storeJournal')->name('upload');
+    Route::get('/journals/{status?}','User\JournalController@index')->name('journal.index');
     Route::resource('journal','User\JournalController');
 });
 

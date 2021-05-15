@@ -41,7 +41,7 @@
                                         <th scope="col">Status</th>
                                         <th scope="col">Category</th>
                                             <th scope="col">Journal</th>
-                                            </tr>
+                                        </tr>
                                         </thead>
                                         <tbody>
                                             @foreach ($user->journal as $journl_details)
@@ -73,15 +73,11 @@
                                                 <td>{{ $journl_details->categories ? implode(', ',$journl_details->categories->pluck('name')->toArray()) :"No Categories" }}</td>
                                                 <td>
                                                     <div>
-                                                        @php
-                                                            $journal = App\Journal::find($user->id);
-                                                        @endphp
-                                                        @if(isset($journal))
-                                                            @foreach ($journal->getMedia() as $item)
+                                                        @if(!empty($journl_details->getMedia()))
+                                                            @foreach ($journl_details->getMedia() as $item)
                                                                 <a href="{{ $item->getUrl() }}" target="_blank" class="btn btn-info">{{ $item->name }}</a>
                                                             @endforeach
                                                         @endif
-
                                                     </div>
                                                 </td>
                                             </tr>

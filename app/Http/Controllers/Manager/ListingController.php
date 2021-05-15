@@ -12,13 +12,10 @@ use App\Http\Controllers\Controller;
 
 class ListingController extends Controller
 {
-	public function showFiles()
-	{
-	}
+
 	
 	public function listOfFiles()
 	{
-		// dd(request()->query());
 		$journals = Journal::with(['categories:id,name','user'])
 		->whereNull('reviewer_id')
 		->when(request()->has('categories'), function($query) {
@@ -30,7 +27,7 @@ class ListingController extends Controller
 		})
 		->paginate(10)
 		->appends(request()->query());
-
+		
 		$categories = Category::all();	
 		return view('manager.listofFiles', compact('journals','categories'));
 	}
@@ -115,7 +112,7 @@ class ListingController extends Controller
 		}
 		$reviewer->assignedJournal()->save($journal);
 
-		return redirect()->route('manager.show-files');
+		return redirect()->route('manager.list-of-files');
 	}
 
 }

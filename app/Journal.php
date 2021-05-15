@@ -20,6 +20,7 @@ class Journal extends Model implements HasMedia
     public const APPROVED = "Approved";
     public const WAITING = "Waiting";
     public const REJECTED = "Rejected";
+    public const PENDING = "Pending";
 
     protected $fillable = ['user_id','reference_id'];
 

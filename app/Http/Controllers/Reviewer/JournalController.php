@@ -20,6 +20,7 @@ class JournalController extends Controller
     {
         $journals = Journal::whereStatus(Journal::WAITING)
                             ->whereReviewerId (auth()->user()->id)
+							->latest()
                             ->paginate(15);
         return view('reviewer.index', compact('journals'));
     }
@@ -64,7 +65,7 @@ class JournalController extends Controller
      */
     public function edit(Journal $journal)
     {
-        $paper = $journal->getMedia()[2]->getUrl();
+        $paper = $journal->getMedia()[3]->getUrl();
         return view('reviewer.checkJournal', compact('journal','paper'));
     }
 
@@ -80,12 +81,12 @@ class JournalController extends Controller
         $validate = $request->validate([
             'status' => [
                 'required',
-                Rule::in('Approved', 'Rejected','Waiting'),
+                Rule::in('Approved', 'Rejected','Pending'),
                 'string'
                 ],
             'reason' => [
                 Rule::requiredIf(function () use($request) {
-                    return in_array($request->status, ['Waiting', 'Rejected']);
+                    return in_array($request->status, ['Rejected','Pending']);
                 })
             ]
         ]);

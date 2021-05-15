@@ -23,6 +23,11 @@
                         Submitted Journal
                     </a>
                 </li>
+                <li class="c-sidebar-nav-item">
+                <a class="c-sidebar-nav-link" href="{{ url('user/journals/pending') }}">
+                        Pending Journal
+                    </a>
+                </li>
             </ul>
         </li>
     </ul>

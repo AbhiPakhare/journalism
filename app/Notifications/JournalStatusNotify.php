@@ -42,7 +42,7 @@ class JournalStatusNotify extends Notification
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
     public function toMail($notifiable){
-        if($this->status == 'Waiting'){
+        if($this->status == 'Pending'){
             return (new MailMessage)
                     ->subject('Reference ID :'.$this->reference_id.' Status : '. $this->status)
                     ->line("Reasons:")
