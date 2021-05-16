@@ -59,7 +59,7 @@
                                     data-description=" {{'Journal Id :'.$journal->reference_id}}"
                                     data-prefill.name="{{ auth()->user()->name }}"
                                     data-prefill.email="{{ auth()->user()->email }}"
-                                    data-prefill.contact="{{ auth()->user()->phone->phone_number }}"
+                                    data-prefill.contact="{{ auth()->user()->phone->phone_number ?? "" }}"
                                     data-theme.color="#3c4b64">
                             </script>
                             <input type="hidden" name="journal_id" value="{{$journal->id}}">
