@@ -48,4 +48,37 @@ class Journal extends Model implements HasMedia
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * Scope a query to only include approved journals.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeApproved($query)
+    {
+        return $query->where('status', Journal::APPROVED);
+    }
+
+    /**
+     * Scope a query to only include waiting journals.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeWaiting($query)
+    {
+        return $query->where('status', Journal::WAITING);
+    }
+
+    /**
+     * Scope a query to only include Rejected journals.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeRejected($query)
+    {
+        return $query->where('status', Journal::REJECTED);
+    }
+
 }
