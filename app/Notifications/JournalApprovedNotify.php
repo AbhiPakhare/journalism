@@ -11,16 +11,25 @@ class JournalApprovedNotify extends Notification
 {
     use Queueable;
 
+    private $journal;
+    private $status;
+    private $user;
+    private $url;
+
     /**
      * Create a new notification instance.
      *
-     * @return void
+     * @param $user
+     * @param $status
+     * @param $journal
+     * @param $url
      */
-    public function __construct($user, $status, $reference_id)
+    public function __construct($user, $status, $journal, $url)
     {
+        $this->url = $url;
         $this->user = $user;
         $this->status = $status;
-        $this->reference_id = $reference_id;
+        $this->journal = $journal;
     }
 
     /**
@@ -43,10 +52,10 @@ class JournalApprovedNotify extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject('Journal Reference ID '.$this->status)
-                    ->line('The journal with'.$this->reference_id.' has been '.$this->status)
+                    ->subject('Journal Reference ID '.$this->journal->reference_id." ".$this->status)
+                    ->line('The journal with reference ID:'.$this->journal->reference_id.' has been '.strtolower($this->status))
                     ->line('Please pay the ₹600 through link given below.')
-                    ->action('Payment', url('/'));
+                    ->action('Make Payment', url('user/razorpay/'.$this->url));
     }
 
     /**

@@ -5,6 +5,20 @@
 	<div class="col-md-12">
 		<div class="card">
 			<div class="card-body">
+                <div class="col-md-12">
+                    @if($errors->any())
+                        @foreach($errors->all() as $error)
+                            <div class="alert alert-danger" role="alert">
+                                {{$error}}
+                            </div>
+                        @endforeach
+                    @endif
+                </div>
+                @if (session('status'))
+                    <div class="alert alert-success">
+                        {{ session('status') }}
+                    </div>
+                @endif
 				@if ($journals->count() > 0)
 					<table class="table table-bordered text-center">
 						<thead class="table-dark">

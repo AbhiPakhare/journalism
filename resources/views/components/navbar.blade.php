@@ -6,7 +6,7 @@
         <i class="fas fa-bars"></i>
     </button>
     <div class="c-header-nav d-md-down-none">
-        <p class="c-header-nav-item m-0"> Welcome, {{auth()->user()->name}}</p>
+        <p class="c-header-nav-item m-0"> Welcome, {{auth()->user()->name}} ({{auth()->user()->role->name}})</p>
     </div>
     <ul class="c-header-nav ml-auto mr-4">
         <li class="c-header-nav-item dropdown">

@@ -21,8 +21,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('razorpay', 'RazorpayController@razorpay')->name('razorpay');
-    Route::post('razorpaypayment', 'RazorpayController@payment')->name('payment');
+
 });
 /*
  * Admin routes
@@ -77,6 +76,8 @@ Route::group([
     'prefix' => 'user',
     'middleware' => ['auth','can:user']
 ], function () {
+    Route::get('razorpay/{url}', 'RazorpayController@razorpay')->name('razorpay');
+    Route::post('razorpaypayment', 'RazorpayController@payment')->name('payment');
     Route::view('/dashboard', 'user.home')->name('dashboard');
     Route::post('/upload-journal','User\JournalController@storeJournal')->name('upload');
     Route::get('/journals/{status?}','User\JournalController@index')->name('journal.index');

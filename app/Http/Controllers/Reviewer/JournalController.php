@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Reviewer;
 
 use App\Journal;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use App\Notifications\JournalStatusNotify;
@@ -94,13 +95,17 @@ class JournalController extends Controller
         $journal->status = $request->status;
         $journal->reason = $request->reason ?? null;
         $journal->save();
-
         if($request->status == 'Approved'){
-            $journal->user->notify(new JournalApprovedNotify($journal->user, $request->status, $journal->reference_id));
+            $params = [
+                'user_id' => $journal->user->id,
+                'journal_id' => $journal->id
+            ];
+            $url = Crypt::encrypt($params);
+            $journal->user->notify(new JournalApprovedNotify($journal->user, $request->status, $journal,$url));
         }else{
             $journal->user->notify(new JournalStatusNotify($journal->user, $request->status , $journal->reference_id, $request->reason));
         }
-        
+
         return redirect()->route('reviewer.journal.index');
     }
 

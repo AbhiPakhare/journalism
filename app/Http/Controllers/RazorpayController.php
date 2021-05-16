@@ -2,15 +2,32 @@
 
 namespace App\Http\Controllers;
 
+use App\Journal;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Razorpay\Api\Api;
 use Session;
 use Redirect;
 class RazorpayController extends Controller
 {
-    public function razorpay()
+    public function razorpay($url)
     {
-        return view('payment.payment');
+        try {
+            $url = Crypt::decrypt($url);
+        }
+        catch (\Throwable $exception) {
+           return redirect()->back()->withErrors('Payment link is wrong');
+        }
+
+        $journal = Journal::with('user')->findOrFail($url['journal_id']);
+
+        if ($journal->user->id !== (int) $url['user_id']){
+            return redirect()
+                    ->route('user.journal.index')
+                    ->withErrors(['You are not authorized to make payment for this journal']);
+        }
+
+        return view('payment.payment', compact('journal'));
     }
 
     public function payment(Request $request)
@@ -27,13 +44,13 @@ class RazorpayController extends Controller
             }
             catch (\Exception $e)
             {
-                return  $e->getMessage();
-                \Session::put('error',$e->getMessage());
-                return redirect()->route('user.journal.index');
+                return redirect()->route('user.journal.index')->with('status', $e->getMessage());
             }
+            $journal = Journal::findOrFail($input['journal_id']);
+            $journal->payment_status = true;
+            $journal->save();
         }
 
-        \Session::put('success', 'Payment successful, your order will be despatched in the next 48 hours.');
-        return redirect()->back();
+        return redirect()->route('user.journal.index')->with('status','Payment Done Successful');
     }
 }
