@@ -30,12 +30,22 @@
 @endpush
 @section('content')
 
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <div class="container">
         <div class="row d-flex justify-content-center align-items-center">
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-body">
-                        @if(!$journal->payment_status)
+                        @if(! $journal->payment_status)
                         <div class=" mb-4">
                             <div class="form-group row">
                                 <label for="staticEmail" class="col-sm-2 col-form-label">Name</label>
