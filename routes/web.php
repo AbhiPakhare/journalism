@@ -1,6 +1,5 @@
 <?php
 
-use App\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,9 +19,7 @@ Route::get('/', function () {
 Route::get('/home', 'HomeController@index')->name('home');
 
 Auth::routes();
-Route::group(['middleware' => 'auth'], function () {
 
-});
 /*
  * Admin routes
  * */
