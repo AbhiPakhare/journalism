@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Journal;
 use App\Role;
 use App\User;
-use Illuminate\Database\Query\Builder;
+use App\Journal;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Illuminate\Database\Query\Builder;
 
 class UserController extends Controller
 {
@@ -18,7 +19,7 @@ class UserController extends Controller
         $data['approved_journals'] = Journal::approved()->count();
         $data['waiting_journals'] = Journal::waiting()->count();
         $data['rejected_journals'] = Journal::rejected()->count();
-
+		$data['all_users'] = User::count();
         $data['reviewers_count'] = User::whereHas('role', function($q) {
             $q->reviewer();
         })->count();
@@ -31,8 +32,19 @@ class UserController extends Controller
             $q->reviewer();
         })->count();
 
-        return view('admin.home',['data',$data]);
+        return view('admin.home',['data' => $data]);
     }
+	
+	public function test()
+	{
+		$journals = Journal::whereBetween('created_at',[Carbon::now()->subDays(30), Carbon::now() ])->get();
+
+		return response()->json([
+			'status' => 200,
+			'data' => $journals
+		]);
+	}
+
     public function listOfUsers()
     {
         $users = User::withCount('journal')

@@ -28,6 +28,7 @@ Route::group([
     'prefix' => 'admin',
     'middleware' => ['auth','can:admin']
 ], function () {
+	Route::get('test','Admin\UserController@test')->name('test');
     Route::get('/dashboard', 'Admin\UserController@dashboard')->name('dashboard');
     Route::get('/list-of-managers', 'Admin\ManagerController@listOfManagers')->name('list-of-managers');
     Route::get('/list-of-reviewers', 'Admin\ReviewerController@listOfReviewers')->name('list-of-reviewers');
