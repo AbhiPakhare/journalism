@@ -44,37 +44,37 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($user->journal as $journl_details)
+                                            @foreach ($user->journal as $journal_detail)
                                                 <tr>
-                                                    <td>{{ $journl_details->reference_id }}</td>
+                                                    <td>{{ $journal_detail->reference_id }}</td>
                                                     <td>
-                                                        @switch($journl_details->status )
+                                                        @switch($journal_detail->status )
                                                             @case("Waiting")
                                                                 <span class="badge badge-warning text-white">
-                                                                    {{ $journl_details->status }}
+                                                                    {{ $journal_detail->status }}
                                                                 </span>
                                                                 @break
                                                             @case("Rejected")
                                                                 <span class="badge badge-danger text-white">
-                                                                    {{ $journl_details->status }}
+                                                                    {{ $journal_detail->status }}
                                                                 </span>
                                                                 @break
                                                             @case("Approved")
                                                                 <span class="badge badge-success text-white">
-                                                                    {{ $journl_details->status }}
+                                                                    {{ $journal_detail->status }}
                                                                 </span>
                                                                 @break
                                                             @default
                                                                 <span class="badge badge-warning text-white">
-                                                                    {{ $journl_details->status }}
+                                                                    {{ $journal_detail->status }}
                                                                 </span>
                                                         @endswitch
                                                     </td>
-                                                <td>{{ $journl_details->categories ? implode(', ',$journl_details->categories->pluck('name')->toArray()) :"No Categories" }}</td>
+                                                <td>{{ $journal_detail->categories ? implode(', ',$journal_detail->categories->pluck('name')->toArray()) :"No Categories" }}</td>
                                                 <td>
                                                     <div>
-                                                        @if(!empty($journl_details->getMedia()))
-                                                            @foreach ($journl_details->getMedia() as $item)
+                                                        @if(!empty($journal_detail->getMedia()))
+                                                            @foreach ($journal_detail->getMedia() as $item)
                                                                 <a href="{{ $item->getUrl() }}" target="_blank" class="btn btn-info">{{ $item->name }}</a>
                                                             @endforeach
                                                         @endif
