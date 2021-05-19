@@ -66,6 +66,8 @@ Route::group([
 ], function () {
     Route::view('/dashboard', 'home')->name('dashboard');
     Route::resource('journal', 'Reviewer\JournalController');
+    Route::get('/my-work/{status}','Reviewer\JournalController@myWorkStats')->name('my-work');
+
 });
 
 Route::group([

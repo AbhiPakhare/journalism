@@ -22,8 +22,26 @@ class JournalController extends Controller
         $journals = Journal::whereStatus(Journal::WAITING)
                             ->whereReviewerId (auth()->user()->id)
 							->latest()
-                            ->paginate(15);
+                            ->paginate(10);
         return view('reviewer.index', compact('journals'));
+    }
+
+    public function myWorkStats($status)
+    {
+        $journals = Journal::whereReviewerId(auth()->user()->id)
+                            ->latest();
+        if ($status == "approved") {
+            $journals = $journals->whereStatus(Journal::APPROVED);
+        }elseif ($status == "rejected"){
+            $journals = $journals->whereStatus(Journal::REJECTED);
+        }elseif ($status == "waiting") {
+            $journals = $journals->whereStatus(Journal::WAITING);
+        }else{
+            abort(403,'Hey you have entered wrong URL');
+        }
+        $journals = $journals->paginate(10);
+
+        return view('reviewer.reviewerWork', compact('journals', 'status'));
     }
 
     /**

@@ -7,6 +7,7 @@
                     list of Journals
                 </h5>
             </div>
+        @if($journals->count())
         <div class="card-body ">
             <table class="table table-bordered table-striped">
                 <thead>
@@ -30,10 +31,15 @@
                             <a href="{{route('reviewer.journal.edit', $journal)}}" class="btn btn-info" >Check Journal</a>
                         </td>
                     </tr>
-
                 @endforeach
                 </tbody>
             </table>
+            {{$journals->links()}}
         </div>
+        @else
+            <div class="alert alert-primary m-2" role="alert">
+                No journals assigned yet
+            </div>
+        @endif
     </div>
 @endsection
