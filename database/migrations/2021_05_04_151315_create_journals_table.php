@@ -19,7 +19,6 @@ class CreateJournalsTable extends Migration
             $table->string('reference_id');
             $table->string('status')->default('Waiting');
             $table->text('reason')->nullable();
-			$table->boolean('payment_done')->default(FALSE);
             $table->timestamps();
             $table->softDeletes();
         });

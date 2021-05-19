@@ -1,6 +1,11 @@
 @extends('layouts.user.app')
 @push('css')
     <style>
+        .card{
+            width: 50%;
+            margin-left: 25%;
+
+        }
         .razorpay-payment-button {
             color: #fff !important;
             background-color: #2eb85c !important;
@@ -30,72 +35,56 @@
 @endpush
 @section('content')
 
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
-    <div class="container">
-        <div class="row d-flex justify-content-center align-items-center">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        @if(! $journal->payment_status)
-                        <div class=" mb-4">
-                            <div class="form-group row">
-                                <label for="staticEmail" class="col-sm-2 col-form-label">Name</label>
-                                <div class="col-sm-10">
-                                    <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{$journal->user->name}}">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="staticEmail" class="col-sm-4 col-form-label">Journal Reference Id</label>
-                                <div class="col-sm-8">
-                                    <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{$journal->reference_id}}">
-                                </div>
-                            </div>
-                        </div>
-                        <form action="{!!route('user.payment')!!}" method="POST">
-                            <script src="https://checkout.razorpay.com/v1/checkout.js"
-                                    data-key="{{ env('RAZOR_KEY') }}"
-                                    data-amount="60000"
-                                    data-buttontext="{{__('Pay ₹600')}}"
-                                    data-name="{{ auth()->user()->name}}"
-                                    data-description=" {{'Journal Id :'.$journal->reference_id}}"
-                                    data-prefill.name="{{ auth()->user()->name }}"
-                                    data-prefill.email="{{ auth()->user()->email }}"
-                                    data-prefill.contact="{{ auth()->user()->phone->phone_number ?? "" }}"
-                                    data-theme.color="#3c4b64">
-                            </script>
-                            <input type="hidden" name="journal_id" value="{{$journal->id}}">
-                            <input type="hidden" name="_token" value="{!!csrf_token()!!}">
-                        </form>
-                        @else
-                            <p class="text-danger">
-                                Payment for {{$journal->reference_id}} has being already done
-                                <br>
-                                <i class="fas fa-arrow-left"></i>
-                                <a href="{{ route('user.journal.index') }}">View all submitted journals</a>
-                            </p>
-                        @endif
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="card">
+    <div class="card-header">
+        <h4>Payment Gateway</h4>
     </div>
+    <div class="card-body">
+        @if(!$journal->payment_status)
+        <dl class="row">
+            <dt class="col-sm-3">Name</dt>
+            <dd class="col-sm-9">{{$journal->user->name}} </dd>
+
+            <dt class="col-sm-3">Email</dt>
+            <dd class="col-sm-9"> {{$journal->user->email}} </dd>
+
+            <dt class="col-sm-3">Reference ID</dt>
+            <dd class="col-sm-9">{{$journal->reference_id}}</dd>
+        </dl>
+        <form action="{!!route('user.payment')!!}" method="POST">
+            <script src="https://checkout.razorpay.com/v1/checkout.js"
+                    data-key="{{ env('RAZOR_KEY') }}"
+                    data-amount="60000"
+                    data-buttontext="{{__('Pay ₹600')}}"
+                    data-name="{{ auth()->user()->name}}"
+                    data-description=" {{'Journal Id :'.$journal->reference_id}}"
+                    data-prefill.name="{{ auth()->user()->name }}"
+                    data-prefill.email="{{ auth()->user()->email }}"
+                    data-prefill.contact="{{ auth()->user()->phone->phone_number ?? "" }}"
+                    data-theme.color="#3c4b64">
+            </script>
+            <input type="hidden" name="journal_id" value="{{$journal->id}}">
+            <input type="hidden" name="_token" value="{!!csrf_token()!!}">
+        </form>
+        @else
+            <p class="text-danger">
+                Payment for {{$journal->reference_id}} has being already done
+                <br>
+                <i class="fas fa-arrow-left"></i>
+                <a href="{{ route('user.journal.index') }}">View all submitted journals</a>
+            </p>
+        @endif
+    </div>
+</div>
+
 @endsection
 @push('scripts')
     @if(!$errors->any())
-{{--        <script>--}}
-{{--            $(window).on('load', function() {--}}
-{{--                jQuery('.razorpay-payment-button').click();--}}
-{{--            });--}}
-{{--        </script>--}}
+       <script>
+           $(window).on('load', function() {
+               jQuery('.razorpay-payment-button').click();
+           });
+       </script>
     @endif
 
 @endpush
