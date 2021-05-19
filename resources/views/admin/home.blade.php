@@ -95,7 +95,7 @@
 							<div class="text-value-lg ">
 								{{ $data['waiting_journals'] ??'0' }}
 							</div>
-							<p class="text">Warning</p>
+							<p class="text">Waiting</p>
 						</div>
 					</div>
 				</div>
@@ -114,241 +114,190 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-md-6">
+		{{-- Last month waiting --}}
+
+		<div class="col-md-12">
 			<div class="card">
 				<div class="card-header">
-					One Month Statistics
+					Last Month Waiting Statistics of Journals
 				</div>
 				<div class="card-body">
-					<h5 class="card-title">Journals</h5>
-					<div>
+					<div style="height: 500px">
 						<canvas id="myChartOneMonth"></canvas>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="col-md-6">
+
+		{{-- Last month approved --}}
+
+		<div class="col-md-12">
 			<div class="card">
 				<div class="card-header">
-					Three months Statistics
+					Last Month Approved statistics of Journals
 				</div>
 				<div class="card-body">
-					<h5 class="card-title">Journal 3 Months</h5>
-					<div>
-						<canvas id="myChartThreeMonth"></canvas>
+					<div style="height: 500px">
+						<canvas id="myChartOneMonthApproved"></canvas>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	
+
+	{{-- Last month rejected --}}
+
 	<div class="row">
-		<div class="col-md-6">
+		<div class="col-md-12">
 			<div class="card">
 				<div class="card-header">
-					Six Month Statistics
+					Last Month Rejected Statistics of journals
 				</div>
 				<div class="card-body">
-					<h5 class="card-title">Journals</h5>
-					<div>
-						<canvas id="myChartSixMonth"></canvas>
+					<div style="height: 500px">
+						<canvas id="lastOneMonthRejected"></canvas>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="col-md-6">
-			<div class="card">
-				<div class="card-header">
-					One Year Statistics
-				</div>
-				<div class="card-body">
-					<h5 class="card-title">Journal 1 Year</h5>
-					<div>
-						<canvas id="myChartOneYear"></canvas>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
 @endsection
 
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-	<script>
-        var url = "{{ route('admin.test')}}";
-        var Years = new Array();
-        var Labels = new Array();
-        var Prices = new Array();
-        $(document).ready(function(){
-          $.get(url, function(response){
-            response.data.forEach(function(data){
-                Years.push(data.reference_id);
-            });
-            var ctx = document.getElementById("myChartOneMonth").getContext('2d');
-                var myChart = new Chart(ctx, {
-                  type: 'bar',
-                  data: {
-                      labels:Years,
-                      datasets: [{
-                          label: 'Infosys Price',
-                          data: Prices,
-                          borderWidth: 1
-                      }]
-                  },
-                  options: {
-                      scales: {
-                          yAxes: [{
-                              ticks: {
-                                  beginAtZero:true
-                              }
-                          }]
-                      }
-                  }
-              });
-          });
-        });
-        </script>
 <script>
-// var ctx = document.getElementById('myChartOneMonth');
-// var myChartOneMonth = new Chart(ctx, {
-//     type: 'bar',
-//     data: {
-//         labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange','abc'],
-//         datasets: [{
-//             label: 'submitted Journal with last one month',
-//             data: [12, 19, 3, 5, 2, 3,40.6],
-//             backgroundColor: [
-//                 'rgba(255, 99, 132, 0.2)',
-//                 'rgba(54, 162, 235, 0.2)',
-//                 'rgba(255, 206, 86, 0.2)',
-//                 'rgba(75, 192, 192, 0.2)',
-//                 'rgba(153, 102, 255, 0.2)',
-//                 'rgba(255, 159, 64, 0.2)'
-//             ],
-//             borderColor: [
-//                 'rgba(255, 99, 132, 1)',
-//                 'rgba(54, 162, 235, 1)',
-//                 'rgba(255, 206, 86, 1)',
-//                 'rgba(75, 192, 192, 1)',
-//                 'rgba(153, 102, 255, 1)',
-//                 'rgba(255, 159, 64, 1)'
-//             ],
-//             borderWidth: 1
-//         }]
-//     },
-//     options: {
-//         scales: {
-//             y: {
-//                 beginAtZero: true
-//             }
-//         }
-//     }
-// });
-var ctx = document.getElementById('myChartThreeMonth');
-var myChartThreeMonth = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange','abc'],
-        datasets: [{
-            label: 'submitted Journal with last three months',
-            data: [12, 19, 3, 5, 2, 3,40.6],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        }
-    }
-});
-var ctx = document.getElementById('myChartSixMonth');
-var myChartSixMonth = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange','abc'],
-        datasets: [{
-            label: 'submitted Journal with last six months',
-            data: [12, 19, 3, 5, 2, 3,40.6],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        }
-    }
-});
-var ctx = document.getElementById('myChartOneYear');
-var myChartOneYear = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange','abc'],
-        datasets: [{
-            label: 'submitted Journal with last one year',
-            data: [12, 19, 3, 5, 2, 3,40.6],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        }
-    }
-});
+	//waiting	
+	var waitingURL = "{{ route('admin.journals-waiting') }}";
+	var dates = new Array();
+	var counts = new Array();
+	$(document).ready(function(){
+		$.get(waitingURL, function(waitingResponse){
+		Object.keys(waitingResponse).forEach(function(key){
+			dates.push(key);
+			counts.push(waitingResponse[key]);
+		});
+		var ctx = document.getElementById("myChartOneMonth").getContext('2d');
+			var myChart = new Chart(ctx, {
+				type: 'bar',
+				data: {
+					labels: dates,
+					datasets: [
+						{
+						label: 'Waiting',
+						data: counts,
+						backgroundColor: [
+							'rgba(255, 159, 64, 0.2)'
+						],
+						borderColor: [
+							'rgba(255, 159, 64, 1)'
+						],
+						borderWidth: 1
+					}]
+				},
+				options: {
+				responsive: true,
+    			maintainAspectRatio: false,
+				scales: {
+						yAxes: [{
+							ticks: {
+								beginAtZero:true
+							}
+						}]
+					}
+				}
+			});
+		});
+	});
+
+
+	//approved
+	const approvedURL = "{{ route('admin.journals-approved') }}";
+	var approvedDates = new Array();
+	var approvedCounts = new Array();
+	$(document).ready(function(){
+
+		$.get(approvedURL, function(response){
+
+		Object.keys(response).forEach(function(key){
+			approvedDates.push(key);
+			approvedCounts.push(response[key]);
+		});
+		var ctx = document.getElementById("myChartOneMonthApproved").getContext('2d');
+			var myChart = new Chart(ctx, {
+				type: 'bar',
+				data: {
+					labels: approvedDates,
+					datasets: [
+						{
+						label: 'Approved',
+						data: approvedCounts,
+						backgroundColor: [
+							'rgba(75, 192, 192, 0.2)',
+						],
+						borderColor: [
+							'rgba(75, 192, 192, 1)',
+						],
+						borderWidth: 1
+					}]
+				},
+				options: {
+				responsive: true,
+    			maintainAspectRatio: false,
+				scales: {
+						yAxes: [{
+							ticks: {
+								beginAtZero:true
+							}
+						}]
+					}
+				}
+			});
+		});
+	});
+
+
+
+	//rejected	
+	var rejectedURL = "{{ route('admin.journals-rejected') }}";
+	var rejectedDates = new Array();
+	var rejectedCounts = new Array();
+	$(document).ready(function(){
+		$.get(rejectedURL, function(rejectedResponse){
+		Object.keys(rejectedResponse).forEach(function(key){
+			rejectedDates.push(key);
+			rejectedCounts.push(rejectedResponse[key]);
+		});
+		var ctx = document.getElementById("lastOneMonthRejected").getContext('2d');
+			var myChart = new Chart(ctx, {
+				type: 'bar',
+				data: {
+					labels: rejectedDates,
+					datasets: [
+						{
+						label: 'Rejected',
+						data: rejectedCounts,
+						backgroundColor: [
+							'rgba(255, 99, 132, 0.2)',
+						],
+						borderColor: [
+							'rgba(255, 99, 132, 1)',
+						],
+						borderWidth: 1
+					}]
+				},
+				options: {
+				responsive: true,
+    			maintainAspectRatio: false,
+				scales: {
+						yAxes: [{
+							ticks: {
+								beginAtZero:true
+							}
+						}]
+					}
+				}
+			});
+		});
+	});
+
 </script>
 @endpush

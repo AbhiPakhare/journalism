@@ -28,7 +28,9 @@ Route::group([
     'prefix' => 'admin',
     'middleware' => ['auth','can:admin']
 ], function () {
-	Route::get('test','Admin\UserController@test')->name('test');
+	Route::get('/journals/approved','Admin\UserController@jouranlApproved')->name('journals-approved');
+	Route::get('/journals/waiting','Admin\UserController@jouranlWaiting')->name('journals-waiting');
+	Route::get('/journals/rejected','Admin\UserController@jouranlRejected')->name('journals-rejected');
     Route::get('/dashboard', 'Admin\UserController@dashboard')->name('dashboard');
     Route::get('/list-of-managers', 'Admin\ManagerController@listOfManagers')->name('list-of-managers');
     Route::get('/list-of-reviewers', 'Admin\ReviewerController@listOfReviewers')->name('list-of-reviewers');

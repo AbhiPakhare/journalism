@@ -25,24 +25,66 @@ class UserController extends Controller
         })->count();
 
         $data['managers_count'] = User::whereHas('role', function($q) {
-            $q->reviewer();
+            $q->manager();
         })->count();
 
         $data['users_count'] = User::whereHas('role', function($q) {
-            $q->reviewer();
+            $q->user();
         })->count();
 
         return view('admin.home',['data' => $data]);
     }
 	
-	public function test()
-	{
-		$journals = Journal::whereBetween('created_at',[Carbon::now()->subDays(30), Carbon::now() ])->get();
+	public function jouranlWaiting()
+	{	
+		$journals = cache()->remember('journal-waiting-api', 60 * 5, function(){
+			return Journal::whereBetween('created_at', [now()->subDays(30), now()])
+				   ->where('status', 'Waiting')
+				   ->orderBy('created_at')->get()->groupBy(function($journal) {
+					   return $journal->created_at->format('d-M');
+				   });
+		});
 
-		return response()->json([
-			'status' => 200,
-			'data' => $journals
-		]);
+		$data = [];
+		foreach($journals as $date => $journal) {
+			$data[$date] = $journal->count();
+		}
+
+		return response()->json($data);
+	}
+	public function jouranlApproved()
+	{	
+		$journals = cache()->remember('journal-approved-api', 60 * 5, function(){
+			return Journal::whereBetween('created_at', [now()->subDays(30), now()])
+				   ->where('status', 'Approved')
+				   ->orderBy('created_at')->get()->groupBy(function($journal) {
+					   return $journal->created_at->format('d-M');
+				   });
+		});
+
+		$data = [];
+		foreach($journals as $date => $journal) {
+			$data[$date] = $journal->count();
+		}
+
+		return response()->json($data);
+	}
+	public function jouranlRejected()
+	{	
+		$journals = cache()->remember('journal-rejected-api', 60 * 5, function(){
+			return Journal::whereBetween('created_at', [now()->subDays(30), now()])
+				   ->where('status', 'Rejected')
+				   ->orderBy('created_at')->get()->groupBy(function($journal) {
+					   return $journal->created_at->format('d-M');
+				   });
+		});
+
+		$data = [];
+		foreach($journals as $date => $journal) {
+			$data[$date] = $journal->count();
+		}
+
+		return response()->json($data);
 	}
 
     public function listOfUsers()
