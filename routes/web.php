@@ -34,6 +34,8 @@ Route::group([
     Route::get('/list-of-reviewers', 'Admin\ReviewerController@listOfReviewers')->name('list-of-reviewers');
     Route::get('/list-of-categories', 'Admin\CategoryController@listOfCategories')->name('list-of-categories');
     Route::get('/list-of-users', 'Admin\UserController@listOfusers')->name('list-of-users');
+	Route::view('/show-approved-journals','admin.approvedFiles')->name('show-approved-journals');
+    Route::get('/approved-journals','Admin\UserController@approvedJournals')->name('approved-journals');
 
     Route::resource('manager','Admin\ManagerController');
     Route::resource('category','Admin\CategoryController');

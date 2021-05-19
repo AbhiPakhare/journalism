@@ -100,4 +100,31 @@ class UserController extends Controller
 
         return view('admin.listOfUsers', compact('users'));
     }
+
+	public function approvedJournals(Request $request)
+	{
+
+		$files_names = Journal::with(['categories:id,name','user', 'reviewer'])
+						->where('status', Journal::APPROVED);
+		return datatables()->eloquent($files_names)
+			->editColumn('created_at', function($manager) {
+				return $manager->created_at ? with(new Carbon($manager->created_at))->format('d/M/Y') : '';
+			})
+			->addColumn('action', function(Journal $journal){
+				$paper = $journal->getMedia()[2]->getUrl();
+				return '<a href="'. $paper .'" target="_blank" class="btn btn-primary">View Paper</a>';
+			})
+			->addColumn('categories', function (Journal $files_names) {
+				$categories = $files_names->categories->pluck('name');
+				$all_categories = [];
+				foreach ($categories as $category) {
+					array_push($all_categories, "<span class='badge rounded-pill bg-dark text-white'>$category</span>");
+				}
+				return implode(" ",$all_categories);
+
+			})
+			->escapeColumns('categories')
+			->toJson();
+            
+	}
 }

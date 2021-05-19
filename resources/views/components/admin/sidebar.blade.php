@@ -66,7 +66,11 @@
                 List of Users
             </a>
         </li>
-      
+		<li class="c-sidebar-nav-item">
+            <a class="c-sidebar-nav-link" href="{{ route('admin.show-approved-journals') }}">
+                Approved Journals
+            </a>
+        </li>
     </ul>
 
 </div>
