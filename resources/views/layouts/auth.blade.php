@@ -13,10 +13,10 @@
     <!-- Styles -->
     <style>
         html, body {
-            background-color: #fff;
-            color: #636b6f;
+            background-color: #ffffff;
+            color: #000000;
             font-family: 'Nunito', sans-serif;
-            font-weight: 200;
+            font-weight: 400;
             height: 100vh;
             margin: 0;
         }

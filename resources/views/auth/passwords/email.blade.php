@@ -5,9 +5,9 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
+                <div class="card-header" style="background-color: #f7f7f7;">{{ __('Reset Password') }}</div>
 
-                <div class="card-body">
+                <div class="card-body" style=" background-color: #fafafa; ">
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
                             {{ session('status') }}
