@@ -25,8 +25,8 @@
                             <td>{{ $journal->reference_id }}</td>
                             <td>{{ date('d-M-Y', strtotime($journal->created_at))  }}</td>
                             <td>
-                                @if(!empty($journal->getMedia()[3]->getUrl()))
-                                    <a href="{{$journal->getMedia()[3]->getUrl()}}" target="_blank" class="btn btn-primary text-white">View Paper</a>
+                                @if(!empty($journal->getMedia()))
+                                    <a href="{{!empty($journal->getMedia()[3]) ? $journal->getMedia()[3]->getUrl():''}}" target="_blank" class="btn btn-primary text-white">View Paper</a>
                                 @endif
                                 @if(in_array($journal->status, ['Waiting', 'Rejected']) && !empty($journal->reason))
                                     <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal-{{$loop->iteration}}">
