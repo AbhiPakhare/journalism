@@ -24,7 +24,29 @@
                 </li>
             </ul>
         </li>
-
+        <li class="c-sidebar-nav-title">My stats</li>
+        <li class="c-sidebar-nav-dropdown">
+            <a class="c-sidebar-nav-dropdown-toggle" href="#">
+                My Work
+            </a>
+            <ul class="c-sidebar-nav-dropdown-items">
+                <li class="c-sidebar-nav-item">
+                    <a class="c-sidebar-nav-link" href="{{ url('reviewer/my-work/waiting') }}">
+                        Waiting Journals
+                    </a>
+                </li>
+                <li class="c-sidebar-nav-item">
+                    <a class="c-sidebar-nav-link" href="{{ url('reviewer/my-work/approved') }}">
+                        Approved Journals
+                    </a>
+                </li>
+                <li class="c-sidebar-nav-item">
+                    <a class="c-sidebar-nav-link" href="{{ url('reviewer/my-work/rejected') }}">
+                        Rejected Journals
+                    </a>
+                </li>
+            </ul>
+        </li>
     </ul>
 
 </div>

@@ -22,7 +22,7 @@ class JournalController extends Controller
 							->latest();
 		if($status == "pending"){
 			$journals = $journals->where('status', Journal::PENDING);
-		}                            
+		}
 		$journals = $journals->paginate(10);
 		return view('user.showJournal', compact('journals','status'));
 	}
@@ -57,11 +57,11 @@ class JournalController extends Controller
 		$journal->addMedia(storage_path('app/journal/temp/'.auth()->user()->id.'/content.pdf')) //1
 				->toMediaCollection();
 		$journal->addMedia(storage_path('app/journal/temp/'.auth()->user()->id.'/bibliography.pdf')) //3
-				->toMediaCollection();    
+				->toMediaCollection();
 		$journal->addMedia(storage_path('app/journal/temp/'.auth()->user()->id.'/paper.pdf'))// 2
 				->toMediaCollection();
-		
-		$journal->categories()->sync([$request->category]);        
+
+		$journal->categories()->sync([$request->category]);
 		if($journal) {
 			$journal->user->notify(new ReferencesIdCreated($journal->user, $reference_id));
 
@@ -94,7 +94,7 @@ class JournalController extends Controller
 
 	}
 
-	
+
 
 
 	/**
