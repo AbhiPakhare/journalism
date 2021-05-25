@@ -74,7 +74,7 @@
                                 </div>
                             </div>
                         </div>
-                        @if (in_array($journal->status,["Waiting", 'Rejected'] ))    
+                        @if (in_array($journal->status,["Waiting", 'Rejected'] ))
                             <div class="form-group row reason"  style="display: block" >
                                 <label class="col-md-12 col-form-label" for="textarea-input">Reason</label>
                                 <div class="col-md-12">
@@ -102,9 +102,9 @@
                         </div>
                         @endif
                         <div class="form-group">
-                            <button class="btn btn-info btn-lg btn-block" type="submit">Verify Journal</button>
+                            <button class="btn btn-info btn-lg btn-block" type="submit">Submit Journal</button>
                         </div>
-        
+
                     </form>
                 </div>
             </div>
