@@ -48,6 +48,8 @@ class RazorpayController extends Controller
             }
             $journal = Journal::findOrFail($input['journal_id']);
             $journal->payment_status = true;
+			$journal->status = Journal::APPROVED;
+			$journal->payment_link = null;
             $journal->save();
         }
 

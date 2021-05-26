@@ -28,6 +28,9 @@
 							<th scope="col">Category</th>
 							<th scope="col">Submitted on</th>
 							<th scope="col">Status</th>
+							@if ($status == "index")
+								<th scope="col">Payment</th>
+							@endif
 							@if ($status == "pending" || $status == "rejected")
 								<th scope="col">Reason</th>
 							@endif
@@ -45,19 +48,36 @@
 									<td>{{ date('d-M-Y', strtotime($journal->created_at))  }}</td>
 									
 									@if ( $journal->status == "Waiting" )
-									
-									<td class="table-info text-dark">{{ $journal->status }}</td>
+										<td class="table-info text-dark">{{ $journal->status }}</td>
 									
 									@elseif ( $journal->status == "Approved" )
-									
-									<td class="table-success">{{ $journal->status }}</td>
+										<td class="table-success">{{ $journal->status }}</td>
+
 									@elseif ( $journal->status == "Pending" )
-									
-									<td class="table-warning">{{ $journal->status }}</td>
+										<td class="table-warning">{{ $journal->status }}</td>
 									
 									@elseif ( $journal->status == "Rejected" )
-									<td class="table-danger">{{ $journal->status }}</td>
+										<td class="table-danger">{{ $journal->status }}</td>
+
+									@elseif ($journal->status == "Pending Payment")
+										<td class="table-secondary">{{ $journal->status }}</td>
 									@endif
+									
+									{{-- Payment Status --}}
+									@if ($status == "index")	
+										@if ($journal->status == "Approved" && $journal->payment_status)
+											<td>Payment Done.</td>
+
+										@elseif ($journal->status == "Pending Payment" && !$journal->payment_status)
+											<td><a href="{{ url('user/razorpay/'.$journal->payment_link) }}" target="_blank">Make Payment</a></td>
+										@elseif ($journal->status == "Rejected")
+											<td>Not Applicable</td>
+
+										@elseif ($journal->status == "Pending" || $journal->status == "Waiting")
+											<td>Not available yet</td>
+										@endif
+									@endif
+
 									@if ($status == "pending" || $status == "rejected")
 										<td>
 											<button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal-{{$loop->iteration}}">

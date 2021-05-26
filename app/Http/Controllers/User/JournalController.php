@@ -25,6 +25,7 @@ class JournalController extends Controller
 		}elseif($status == "rejected"){
 			$journals = $journals->where('status', Journal::REJECTED);
 		}
+		
 		$journals = $journals->paginate(10);
 		return view('user.showJournal', compact('journals','status'));
 	}

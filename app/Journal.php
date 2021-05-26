@@ -21,6 +21,7 @@ class Journal extends Model implements HasMedia
     public const WAITING = "Waiting";
     public const REJECTED = "Rejected";
     public const PENDING = "Pending";
+    public const PENDING_PAYMENT = "Pending Payment";
 
     protected $fillable = ['user_id','reference_id'];
 

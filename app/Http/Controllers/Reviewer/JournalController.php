@@ -20,7 +20,7 @@ class JournalController extends Controller
     public function index()
     {
         $journals = Journal::whereStatus(Journal::WAITING)
-                            ->whereReviewerId (auth()->user()->id)
+                            ->whereReviewerId(auth()->user()->id)
 							->latest()
                             ->paginate(10);
         return view('reviewer.index', compact('journals'));
@@ -110,19 +110,24 @@ class JournalController extends Controller
             ]
         ]);
         $journal = Journal::findOrFail($id);
-        $journal->status = $request->status;
+		$journal->status = $request->status == Journal::APPROVED 
+							? Journal::PENDING_PAYMENT 
+							: $request->status;
+
         $journal->reason = $request->reason ?? null;
-        $journal->save();
-        if($request->status == 'Approved'){
+		
+        if($request->status == Journal::APPROVED){
             $params = [
                 'user_id' => $journal->user->id,
                 'journal_id' => $journal->id
             ];
             $url = Crypt::encrypt($params);
+			$journal->payment_link = $url;
             $journal->user->notify(new JournalApprovedNotify($journal->user, $request->status, $journal,$url));
         }else{
             $journal->user->notify(new JournalStatusNotify($journal->user, $request->status , $journal->reference_id, $request->reason));
         }
+        $journal->save();
 
         return redirect()->route('reviewer.journal.index');
     }
