@@ -19,6 +19,7 @@ class UserController extends Controller
         $data['approved_journals'] = Journal::approved()->count();
         $data['waiting_journals'] = Journal::waiting()->count();
         $data['rejected_journals'] = Journal::rejected()->count();
+        $data['pending_journals'] = Journal::pending()->count();
 		$data['all_users'] = User::count();
         $data['reviewers_count'] = User::whereHas('role', function($q) {
             $q->reviewer();
@@ -34,9 +35,9 @@ class UserController extends Controller
 
         return view('admin.home',['data' => $data]);
     }
-	
+
 	public function jouranlWaiting()
-	{	
+	{
 		$journals = cache()->remember('journal-waiting-api', 60 * 5, function(){
 			return Journal::whereBetween('created_at', [now()->subDays(30), now()])
 				   ->where('status', 'Waiting')
@@ -53,7 +54,7 @@ class UserController extends Controller
 		return response()->json($data);
 	}
 	public function jouranlApproved()
-	{	
+	{
 		$journals = cache()->remember('journal-approved-api', 60 * 5, function(){
 			return Journal::whereBetween('created_at', [now()->subDays(30), now()])
 				   ->where('status', 'Approved')
@@ -70,7 +71,7 @@ class UserController extends Controller
 		return response()->json($data);
 	}
 	public function jouranlRejected()
-	{	
+	{
 		$journals = cache()->remember('journal-rejected-api', 60 * 5, function(){
 			return Journal::whereBetween('created_at', [now()->subDays(30), now()])
 				   ->where('status', 'Rejected')
@@ -111,7 +112,7 @@ class UserController extends Controller
 				return $manager->created_at ? with(new Carbon($manager->created_at))->format('d/M/Y') : '';
 			})
 			->addColumn('action', function(Journal $journal){
-				$paper = $journal->getMedia()[2]->getUrl();
+				$paper = $journal->getMedia()[3]->getUrl();
 				return '<a href="'. $paper .'" target="_blank" class="btn btn-primary">View Paper</a>';
 			})
 			->addColumn('categories', function (Journal $files_names) {
@@ -125,6 +126,6 @@ class UserController extends Controller
 			})
 			->escapeColumns('categories')
 			->toJson();
-            
+
 	}
 }

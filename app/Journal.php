@@ -81,4 +81,15 @@ class Journal extends Model implements HasMedia
         return $query->where('status', Journal::REJECTED);
     }
 
+    /**
+     * Scope a query to only include Pending journals.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopePending($query)
+    {
+        return $query->where('status', Journal::PENDING);
+    }
+
 }

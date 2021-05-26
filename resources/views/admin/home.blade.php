@@ -24,7 +24,7 @@
 							<div class="text-value-lg ">
 								{{ $data['all_users'] ?? '0' }}
 							</div>
-							<p class="text">All users</p>
+							<p class="text">Registered Users</p>
 						</div>
 					</div>
 				</div>
@@ -80,6 +80,7 @@
 					</div>
 				</div>
 				<div class="col-md-3 col-sm-6">
+                    <a href="{{route('admin.show-approved-journals')}}">
 					<div class="card text-white bg-success mb-3">
 						<div class="card-body">
 							<div class="text-value-lg ">
@@ -88,6 +89,7 @@
 							<p class="text">Approved</p>
 						</div>
 					</div>
+                    </a>
 				</div>
 				<div class="col-md-3 col-sm-6">
 					<div class="card text-white bg-warning mb-3">
@@ -107,6 +109,46 @@
 							</div>
 
 							<p class="text">Rejected</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3 col-sm-6">
+					<div class="card text-white mb-3" style="background-color: #F29339">
+						<div class="card-body">
+							<div class="text-value-lg ">
+								{{ $data['pending_journals'] ?? '0' }}
+							</div>
+
+							<p class="text">Pending</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="card">
+		<div class="card-header" >
+			Payment Stats
+		</div>
+		<div class="card-body">
+			<div class="row">
+				<div class="col-md-3 col-sm-6">
+					<div class="card text-white bg-success mb-3">
+						<div class="card-body">
+							<div class="text-value-lg ">
+								{{ $data['all_journals'] ?? '0' }}
+							</div>
+							<p class="text">Payment Done</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3 col-sm-6">
+					<div class="card text-white  mb-3" style="background-color: #F29339">
+						<div class="card-body">
+							<div class="text-value-lg ">
+								{{ $data['approved_journals'] ?? '0' }}
+							</div>
+							<p class="text">Pending Payments</p>
 						</div>
 					</div>
 				</div>
@@ -165,7 +207,7 @@
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-	//waiting	
+	//waiting
 	var waitingURL = "{{ route('admin.journals-waiting') }}";
 	var dates = new Array();
 	var counts = new Array();
@@ -256,7 +298,7 @@
 
 
 
-	//rejected	
+	//rejected
 	var rejectedURL = "{{ route('admin.journals-rejected') }}";
 	var rejectedDates = new Array();
 	var rejectedCounts = new Array();

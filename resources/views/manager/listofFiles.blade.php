@@ -43,14 +43,20 @@
                             <td>{{ $journal->user->name }}</td>
                             <td>{{ date('d-M-Y', strtotime($journal->created_at)) }}</td>
                             <td>
-                                <a 
-                                    href="{{ (isset($journal->getMedia()[3])) ? $journal->getMedia()[3]->getUrl() : "No paper uploaded" }}" 
+                                <a
+                                    href="{{ (isset($journal->getMedia()[3])) ? $journal->getMedia()[3]->getUrl() : "No paper uploaded" }}"
                                     class="btn btn-info"
                                     target="_blank">
                                     View Paper
                                 </a>
-                                <a 
-                                    href="{{ route('manager.show-journal',[$journal->id]) }}" 
+                                <a
+                                    href="{{ (isset($journal->getMedia()[0])) ? $journal->getMedia()[0]->getUrl() : "No Title uploaded" }}"
+                                    class="btn btn-info"
+                                    target="_blank">
+                                    View Title
+                                </a>
+                                <a
+                                    href="{{ route('manager.show-journal',[$journal->id]) }}"
                                     class="btn btn-info">
                                     Assign
                                 </a>

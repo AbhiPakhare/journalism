@@ -13,7 +13,7 @@ use App\Http\Controllers\Controller;
 class ListingController extends Controller
 {
 
-	
+
 	public function listOfFiles()
 	{
 		$journals = Journal::with(['categories:id,name','user'])
@@ -27,8 +27,8 @@ class ListingController extends Controller
 		})
 		->paginate(10)
 		->appends(request()->query());
-		
-		$categories = Category::all();	
+
+		$categories = Category::all();
 		return view('manager.listofFiles', compact('journals','categories'));
 	}
 
@@ -62,8 +62,9 @@ class ListingController extends Controller
 				return $manager->created_at ? with(new Carbon($manager->created_at))->format('d/M/Y') : '';
 			})
 			->addColumn('action', function(Journal $journal){
-				$paper = $journal->getMedia()[2]->getUrl();
-				return '<a href="'. $paper .'" target="_blank" class="btn btn-primary">View Paper</a>';
+				$title = $journal->getMedia()[0]->getUrl();
+				$paper = $journal->getMedia()[3]->getUrl();
+				return '<a href="'. $title .'" target="_blank" class="btn btn-primary">View Title</a> <a href="'. $paper .'" target="_blank" class="btn btn-primary">View Paper</a>';
 			})
 			->addColumn('categories', function (Journal $files_names) {
 				$categories = $files_names->categories->pluck('name');

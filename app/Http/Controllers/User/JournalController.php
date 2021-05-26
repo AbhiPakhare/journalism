@@ -56,9 +56,9 @@ class JournalController extends Controller
 				->toMediaCollection();
 		$journal->addMedia(storage_path('app/journal/temp/'.auth()->user()->id.'/content.pdf')) //1
 				->toMediaCollection();
-		$journal->addMedia(storage_path('app/journal/temp/'.auth()->user()->id.'/bibliography.pdf')) //3
+		$journal->addMedia(storage_path('app/journal/temp/'.auth()->user()->id.'/bibliography.pdf')) //2
 				->toMediaCollection();
-		$journal->addMedia(storage_path('app/journal/temp/'.auth()->user()->id.'/paper.pdf'))// 2
+		$journal->addMedia(storage_path('app/journal/temp/'.auth()->user()->id.'/paper.pdf'))// 3
 				->toMediaCollection();
 
 		$journal->categories()->sync([$request->category]);
