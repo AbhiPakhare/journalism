@@ -22,6 +22,8 @@ class JournalController extends Controller
 							->latest();
 		if($status == "pending"){
 			$journals = $journals->where('status', Journal::PENDING);
+		}elseif($status == "rejected"){
+			$journals = $journals->where('status', Journal::REJECTED);
 		}
 		$journals = $journals->paginate(10);
 		return view('user.showJournal', compact('journals','status'));
@@ -46,6 +48,7 @@ class JournalController extends Controller
 	 */
 
 	public function store(Request $request){
+		
 		$reference_id = time();
 		$journal = Journal::firstOrCreate([
 								'user_id' => auth()->user()->id,

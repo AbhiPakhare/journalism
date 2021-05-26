@@ -38,7 +38,6 @@
               </select>
             </div>
             <button type="submit" class="btn btn-primary btn-lg btn-block">Submit Journal</button>
-
         </form>
       </div>
     </div>

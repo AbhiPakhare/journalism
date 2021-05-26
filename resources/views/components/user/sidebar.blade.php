@@ -8,24 +8,29 @@
                 Dashboard
             </a>
         </li>
+		<li class="c-sidebar-nav-item">
+			<a class="c-sidebar-nav-link" href="{{ route('user.journal.create') }}">
+				Submit Journal
+			</a>
+		</li>
         <li class="c-sidebar-nav-dropdown">
             <a class="c-sidebar-nav-dropdown-toggle" href="#">
                 Journal
             </a>
             <ul class="c-sidebar-nav-dropdown-items">
                 <li class="c-sidebar-nav-item">
-                    <a class="c-sidebar-nav-link" href="{{ route('user.journal.create') }}">
-                        Create Journal
-                    </a>
-                </li>
-                <li class="c-sidebar-nav-item">
                     <a class="c-sidebar-nav-link" href="{{ route('user.journal.index') }}">
-                        Submitted Journal
+                        All
                     </a>
                 </li>
                 <li class="c-sidebar-nav-item">
                 <a class="c-sidebar-nav-link" href="{{ url('user/journals/pending') }}">
-                        Pending Journal
+                        Pending
+                    </a>
+                </li>
+                <li class="c-sidebar-nav-item">
+                <a class="c-sidebar-nav-link" href="{{ url('user/journals/rejected') }}">
+                        Rejected
                     </a>
                 </li>
             </ul>
