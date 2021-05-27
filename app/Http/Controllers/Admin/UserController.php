@@ -7,9 +7,7 @@ use App\User;
 use App\Journal;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use Illuminate\Database\Query\Builder;
 
 class UserController extends Controller
 {
@@ -34,9 +32,9 @@ class UserController extends Controller
 
         return view('admin.home',['data' => $data]);
     }
-	
+
 	public function jouranlWaiting()
-	{	
+	{
 		$journals = cache()->remember('journal-waiting-api', 60 * 5, function(){
 			return Journal::whereBetween('created_at', [now()->subDays(30), now()])
 				   ->where('status', 'Waiting')
@@ -53,7 +51,7 @@ class UserController extends Controller
 		return response()->json($data);
 	}
 	public function jouranlApproved()
-	{	
+	{
 		$journals = cache()->remember('journal-approved-api', 60 * 5, function(){
 			return Journal::whereBetween('created_at', [now()->subDays(30), now()])
 				   ->where('status', 'Approved')
@@ -70,7 +68,7 @@ class UserController extends Controller
 		return response()->json($data);
 	}
 	public function jouranlRejected()
-	{	
+	{
 		$journals = cache()->remember('journal-rejected-api', 60 * 5, function(){
 			return Journal::whereBetween('created_at', [now()->subDays(30), now()])
 				   ->where('status', 'Rejected')
@@ -125,6 +123,6 @@ class UserController extends Controller
 			})
 			->escapeColumns('categories')
 			->toJson();
-            
+
 	}
 }

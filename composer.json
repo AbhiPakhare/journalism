@@ -16,6 +16,7 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.4",
         "razorpay/razorpay": "^2.7",
+        "realrashid/sweet-alert": "^3.2",
         "spatie/laravel-medialibrary": "^7.0.0",
         "yajra/laravel-datatables": "1.5",
         "yajra/laravel-datatables-oracle": "^9.18"

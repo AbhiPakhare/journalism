@@ -80,7 +80,7 @@ Route::group([
 ], function () {
     Route::get('razorpay/{url}', 'RazorpayController@razorpay')->name('razorpay');
     Route::post('razorpaypayment', 'RazorpayController@payment')->name('payment');
-    Route::view('/dashboard', 'user.home')->name('dashboard');
+    Route::get('/dashboard', 'User\JournalController@dashboard')->name('dashboard');
     Route::post('/upload-journal','User\JournalController@storeJournal')->name('upload');
     Route::get('/journals/{status?}','User\JournalController@index')->name('journal.index');
     Route::resource('journal','User\JournalController');
