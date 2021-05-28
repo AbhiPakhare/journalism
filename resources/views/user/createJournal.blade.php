@@ -29,7 +29,7 @@
             <div class="form-group my-3">
               <h5 class="card-title">Paper Document <span class="mandatory">*</span></h5>
               <input type="file" id="paper" class="form-control-file" name="paper">
-            </div>
+            </div>	
             <div class="form-group my-3">
               <h5 class="card-title">Bibliography <span class="mandatory">*</span></h5>
               <input type="file" id="bibliography" class="form-control-file" name="bibliography">
@@ -53,56 +53,70 @@
         </form>
       </div>
     </div>
-  </div>
-</div>
 
 @endsection
 
 @push('scripts')
 
-<script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
-<script src="https://unpkg.com/filepond/dist/filepond.js"></script>
-  <script>
+    <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+    <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
+    <script>
         // In your Javascript (external .js resource or <script> tag)
-    $(document).ready(function() {
-      $('#categories').select2({
-          placeholder: "Select Category",
-          allowClear: true,
-          cache: true
-      });
-  });
+        $(document).ready(function() {
+            $('#categories').select2({
+                placeholder: "Select Category",
+                allowClear: true,
+                cache: true
+            });
+        });
 
-  </script>
-  <script>
+    </script>
+    <script>
 
-    FilePond.registerPlugin(FilePondPluginFileValidateType);
-          FilePond.create(document.querySelector('input[id = "title"]'), {
-              acceptedFileTypes: ['application/pdf'],
-              required : true,
-              allowRevert : false,
-              credits :false
-          }); 
-          FilePond.create(document.querySelector('input[id = "content"]'), {
-              acceptedFileTypes: ['application/pdf'],
-              required : true,
-              allowRevert : false,
-              credits :false
-          }); 
-          FilePond.create(document.querySelector('input[id = "paper"]'), {
-              acceptedFileTypes: ['application/pdf'],
-              required : true,
-              allowRevert : false,
-              credits :false
-          });
-          FilePond.create(document.querySelector('input[id = "bibliography"]'), {
-              acceptedFileTypes: ['application/pdf'],
-              required : true,
-              allowRevert : false,
-              credits :false
-          });
+        FilePond.registerPlugin(FilePondPluginFileValidateType);
+        FilePond.create(document.querySelector('input[id = "title"]'), {
+            acceptedFileTypes: [
+                'application/pdf',
+                'application/msword',
+                'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+            ],
+            required : true,
+            allowRevert : false,
+            credits :false
+        });
+        FilePond.create(document.querySelector('input[id = "content"]'), {
+            acceptedFileTypes: [
+                'application/pdf',
+                'application/msword',
+                'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+            ],
+            required : true,
+            allowRevert : false,
+            credits :false
+        });
+        FilePond.create(document.querySelector('input[id = "paper"]'), {
+            acceptedFileTypes: [
+                'application/pdf',
+                'application/msword',
+                'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+            ],
+            required : true,
+            allowRevert : false,
+            credits :false
+        });
+        FilePond.create(document.querySelector('input[id = "bibliography"]'), {
+            acceptedFileTypes: [
+                'application/pdf',
+                'application/msword',
+                'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+            ],
+            required : true,
+            allowRevert : false,
+            credits :false
+        });
 
-          FilePond.setOptions({
-              server: {
+        FilePond.setOptions({
+            server: {
                 url:'{{ route('user.upload') }}',
                 headers:{
                     'X-CSRF-TOKEN':'{{ csrf_token() }}',
@@ -110,6 +124,7 @@
                 }
             }
         });
-  </script>
+    </script>
+
 
 @endpush

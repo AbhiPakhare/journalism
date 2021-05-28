@@ -165,7 +165,7 @@
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-	//waiting	
+	//waiting
 	var waitingURL = "{{ route('admin.journals-waiting') }}";
 	var dates = new Array();
 	var counts = new Array();
@@ -256,7 +256,7 @@
 
 
 
-	//rejected	
+	//rejected
 	var rejectedURL = "{{ route('admin.journals-rejected') }}";
 	var rejectedDates = new Array();
 	var rejectedCounts = new Array();
