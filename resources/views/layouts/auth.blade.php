@@ -7,15 +7,15 @@
     <title>Laravel</title>
 
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-    <link rel="stylesheet" href="https://unpkg.com/@coreui/coreui/dist/css/coreui.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/@coreui/coreui/dist/css/coreui.min.css">
 
     <!-- Styles -->
     <style>
         html, body {
-            background-color: #ffffff;
-            color: #000000;
-            font-family: 'Nunito', sans-serif;
+            background-image: url('{{ asset('images/background.png') }}');
+            background-size: cover;
+            background-position: top;
+            min-height: 100vh;
             font-weight: 400;
             height: 100vh;
             margin: 0;
@@ -37,10 +37,6 @@
             top: 18px;
         }
 
-        .content {
-            text-align: center;
-        }
-
         .links > a {
             color: #636b6f;
             padding: 0 25px;
@@ -49,26 +45,38 @@
             letter-spacing: .1rem;
             text-decoration: none;
             text-transform: uppercase;
+            color: white;
         }
+        .main {
+            /* The image used */
+            background-image: url('{{ asset('images/background-half.png') }}');
 
+            /* Center and scale the image nicely */
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        .auth-header {
+            height: 100px;
+            background-color: #316989;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .card {
+            box-shadow: rgb(14 30 37 / 12%) 0px 2px 4px 0px, rgb(14 30 37 / 32%) 0px 2px 16px 0px;
+            border: none !important;
+        }
+        .card-body {
+            padding: 0 !important;
+        }
+        .card-content {
+            padding: 1.5rem !important;
+        }
     </style>
 </head>
 <body>
-<div class="">
-    @if (Route::has('login'))
-        <div class="top-right links">
-            @auth
-                <a href="{{ url('/home') }}">Home</a>
-            @else
-                <a href="{{ route('login') }}">Login</a>
-
-                @if (Route::has('register'))
-                    <a href="{{ route('register') }}">Register</a>
-                @endif
-            @endauth
-        </div>
-    @endif
-
+<div class="main">
     <div class="content">
         <div class="container-fluid flex-center full-height">
             @yield('content')

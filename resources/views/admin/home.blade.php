@@ -136,7 +136,7 @@
 					<div class="card text-white bg-success mb-3">
 						<div class="card-body">
 							<div class="text-value-lg ">
-								{{ $data['all_journals'] ?? '0' }}
+								{{ $data['payment_approved'] ?? '0' }}
 							</div>
 							<p class="text">Payment Done</p>
 						</div>
@@ -146,7 +146,7 @@
 					<div class="card text-white  mb-3" style="background-color: #F29339">
 						<div class="card-body">
 							<div class="text-value-lg ">
-								{{ $data['approved_journals'] ?? '0' }}
+								{{ $data['payment_pending'] ?? '0' }}
 							</div>
 							<p class="text">Pending Payments</p>
 						</div>

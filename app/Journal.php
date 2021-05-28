@@ -21,6 +21,7 @@ class Journal extends Model implements HasMedia
     public const WAITING = "Waiting";
     public const REJECTED = "Rejected";
     public const PENDING = "Pending";
+    public const PENDING_PAYMENT = "Pending Payment";
 
     protected $fillable = ['user_id','reference_id'];
 
@@ -90,6 +91,17 @@ class Journal extends Model implements HasMedia
     public function scopePending($query)
     {
         return $query->where('status', Journal::PENDING);
+    }
+
+        /**
+     * Scope a query to only include Pending payment journals.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopePaymentPending($query)
+    {
+        return $query->where('payment_status', 0);
     }
 
 }

@@ -7,9 +7,7 @@ use App\User;
 use App\Journal;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use Illuminate\Database\Query\Builder;
 
 class UserController extends Controller
 {
@@ -32,7 +30,12 @@ class UserController extends Controller
         $data['users_count'] = User::whereHas('role', function($q) {
             $q->user();
         })->count();
-
+        $data['payment_pending'] = Journal::pending()
+                                ->where('payment_status', 0)
+                                ->count();
+        $data['payment_approved'] = Journal::approved()
+                                ->where('payment_status', 1)
+                                ->count();
         return view('admin.home',['data' => $data]);
     }
 

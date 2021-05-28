@@ -8,6 +8,9 @@
 		<div class="card">
 			<div class="card-header">Re Submit Journal :  {{ $journal->reference_id }}</div>
 			<div class="card-body">
+				<div class="card-title">
+					Reason: {{ $journal->reason }}
+				</div>
 				<form action="{{ route('user.journal.update', [$journal]) }}" method="POST">
 					@csrf
 					@method('PUT')
