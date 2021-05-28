@@ -1,6 +1,11 @@
 @extends('layouts.user.app')
 @push('css')
   <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet" />
+  <style>
+	  .mandatory{
+		  color: red;
+	  }
+  </style>
 @endpush
 @section('content')
 <div class="row justify-content-center">
@@ -14,29 +19,36 @@
         <form action="{{ route('user.journal.store') }}" method="POST" enctype="multipart/form-data">
           @csrf
             <div class="form-group">
-              <h5 class="card-title">Title</h5>
+              <h5 class="card-title">Title <span class="mandatory">*</span></h5>
               <input type="file" id ="title" value="{{ old('title') }}" class="form-control-file" name="title">
-            </div>  
+            </div>
             <div class="form-group my-3">
-              <h5 class="card-title">Table Content</h5> 
+              <h5 class="card-title">Table Content <span class="mandatory">*</span></h5>
               <input type="file" id="content" class="form-control-file" name="content">
             </div>
             <div class="form-group my-3">
-              <h5 class="card-title">Paper Document</h5> 
+              <h5 class="card-title">Paper Document <span class="mandatory">*</span></h5>
               <input type="file" id="paper" class="form-control-file" name="paper">
             </div>
             <div class="form-group my-3">
-              <h5 class="card-title">Bibliography</h5> 
+              <h5 class="card-title">Bibliography <span class="mandatory">*</span></h5>
               <input type="file" id="bibliography" class="form-control-file" name="bibliography">
             </div>
             <div class="form-group my-3">
-            <h5 class="card-title">Category</h5>
-              <select class="form-control form-control-sm categories"  name="category">
-                @foreach ($categories as $category)
-                  <option value="{{ $category->id }}">{{ $category->name }}</option>
-                @endforeach
-              </select>
+            <h5 class="card-title">Category <span class="mandatory">*</span></h5>
+				<select class="form-control form-control-sm categories"  name="category">
+					@foreach ($categories as $category)
+						<option value="{{ $category->id }}">{{ $category->name }}</option>
+					@endforeach
+				</select>
             </div>
+			<div class="rules">
+				<ul>
+					<li>Feilds with <span class="mandatory">*</span> this are mandatory.</li>
+					<li>All the file should be of .pdf or .doc or .docx extension.</li>
+					<li>Each file size should be less than 5MB.</li>
+					</ul>
+			</div>
             <button type="submit" class="btn btn-primary btn-lg btn-block">Submit Journal</button>
         </form>
       </div>
@@ -81,13 +93,13 @@
               required : true,
               allowRevert : false,
               credits :false
-          }); 
+          });
           FilePond.create(document.querySelector('input[id = "bibliography"]'), {
               acceptedFileTypes: ['application/pdf'],
               required : true,
-              allowRevert : false,  
+              allowRevert : false,
               credits :false
-          }); 
+          });
 
           FilePond.setOptions({
               server: {
@@ -95,10 +107,9 @@
                 headers:{
                     'X-CSRF-TOKEN':'{{ csrf_token() }}',
                     'Accept' : 'application/json'
-                  }
+                }
             }
         });
   </script>
-
 
 @endpush
