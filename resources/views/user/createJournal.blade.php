@@ -14,12 +14,15 @@
       <div class="card-header">
         <h3>File Upload</h3>
       </div>
-      
+
       <div class="card-body">
         <form action="{{ route('user.journal.store') }}" method="POST" enctype="multipart/form-data">
           @csrf
             <div class="form-group">
-              <h5 class="card-title">Title <span class="mandatory">*</span></h5>
+                <div class="row">
+                    <h5 class="card-title" style="margin-left: 14px">Title <span class="mandatory">*</span></h5> <a href="{{URL::asset('sample/Title.pdf')}}" target="_blank" style="margin-left: 7px">Sample Title</a>
+                </div>
+
               <input type="file" id ="title" value="{{ old('title') }}" class="form-control-file" name="title">
             </div>
             <div class="form-group my-3">
@@ -29,7 +32,7 @@
             <div class="form-group my-3">
               <h5 class="card-title">Paper Document <span class="mandatory">*</span></h5>
               <input type="file" id="paper" class="form-control-file" name="paper">
-            </div>	
+            </div>
             <div class="form-group my-3">
               <h5 class="card-title">Bibliography <span class="mandatory">*</span></h5>
               <input type="file" id="bibliography" class="form-control-file" name="bibliography">

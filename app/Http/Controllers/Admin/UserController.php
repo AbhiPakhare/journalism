@@ -30,7 +30,7 @@ class UserController extends Controller
         $data['users_count'] = User::whereHas('role', function($q) {
             $q->user();
         })->count();
-        $data['payment_pending'] = Journal::pending()
+        $data['payment_pending'] = Journal::paymentPending()
                                 ->where('payment_status', 0)
                                 ->count();
         $data['payment_approved'] = Journal::approved()
