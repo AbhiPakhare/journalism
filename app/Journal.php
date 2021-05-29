@@ -101,7 +101,7 @@ class Journal extends Model implements HasMedia
      */
     public function scopePaymentPending($query)
     {
-        return $query->where('payment_status', 0);
+        return $query->where('status', Journal::PENDING_PAYMENT);
     }
 
 }
