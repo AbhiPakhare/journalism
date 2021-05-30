@@ -39,6 +39,17 @@ class UserController extends Controller
         return view('admin.home',['data' => $data]);
     }
 
+	public function journalPie(){
+
+		$journal_stats['approved'] = Journal::approved()->count();
+        $journal_stats['waiting'] = Journal::waiting()->count();
+        $journal_stats['rejected'] = Journal::rejected()->count();
+        $journal_stats['pending'] = Journal::pending()->count();
+		$journal_stats['payment_pending'] = Journal::paymentPending()->count();
+		
+		return response()->json($journal_stats);
+	}
+
 	public function jouranlWaiting()
 	{
 		$journals = cache()->remember('journal-waiting-api', 60 * 5, function(){

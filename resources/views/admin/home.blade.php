@@ -155,9 +155,23 @@
 			</div>
 		</div>
 	</div>
-	<div class="row">
-		{{-- Last month waiting --}}
 
+	<div class="row">
+		{{-- Journal Pie --}}
+		<div class="col-md-12">
+			<div class="card">
+				<div class="card-header">
+					Journal Pie Chart
+				</div>
+				<div class="card-body">
+					<div style="height: 500px">
+						<canvas id="journalPie"></canvas>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		{{-- Last month waiting --}}
 		<div class="col-md-12">
 			<div class="card">
 				<div class="card-header">
@@ -207,6 +221,44 @@
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
+
+	//Journal Pie
+	var journalURL = "{{ route('admin.journals-pie') }}";
+	var dates = new Array();
+	var counts = new Array();
+	$(document).ready(function(){
+		$.get(journalURL, function(waitingResponse){
+		Object.keys(waitingResponse).forEach(function(key){
+			dates.push(key);
+			counts.push(waitingResponse[key]);
+		});
+		var ctx = document.getElementById("journalPie").getContext('2d');
+			var myChart = new Chart(ctx, {
+				type: 'pie',
+				data: {
+					labels: dates,
+					datasets: [
+						{
+						label: 'journalPie',
+						data: counts,
+						backgroundColor: [
+							"#2ecc71",
+							"#f1c40f",
+							"#e74c3c",
+							"#3498db",
+							"#9b59b6"
+						],
+						
+						borderWidth: 1
+					}]
+				},
+				options: {
+				responsive: true,
+    			maintainAspectRatio: false,
+				}
+			});
+		});
+	});
 	//waiting
 	var waitingURL = "{{ route('admin.journals-waiting') }}";
 	var dates = new Array();
