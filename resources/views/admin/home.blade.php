@@ -224,23 +224,23 @@
 
 	//Journal Pie
 	var journalURL = "{{ route('admin.journals-pie') }}";
-	var dates = new Array();
-	var counts = new Array();
+	var stats = new Array();
+	var stats_counts = new Array();
 	$(document).ready(function(){
 		$.get(journalURL, function(waitingResponse){
 		Object.keys(waitingResponse).forEach(function(key){
-			dates.push(key);
-			counts.push(waitingResponse[key]);
+			stats.push(key);
+			stats_counts.push(waitingResponse[key]);
 		});
 		var ctx = document.getElementById("journalPie").getContext('2d');
 			var myChart = new Chart(ctx, {
 				type: 'pie',
 				data: {
-					labels: dates,
+					labels: stats,
 					datasets: [
 						{
 						label: 'journalPie',
-						data: counts,
+						data: stats_counts,
 						backgroundColor: [
 							"#2ecc71",
 							"#f1c40f",
