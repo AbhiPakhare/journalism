@@ -32,7 +32,10 @@
 <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
 <script>
 	FilePond.create(document.querySelector('input[id = "paper"]'), {
-		acceptedFileTypes: ['application/pdf'],
+		acceptedFileTypes: [
+			'application/pdf', 
+			'application/msword',
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document'],
 		// required : true,
 		allowRevert : false,
 		credits :false

@@ -44,7 +44,7 @@
 								<tr>
 									<th scope="row">{{ $loop->iteration }}</th>
 									<td>{{ $journal->reference_id }}</td>
-									<td>{{ $journal->categories[0]->name }}</td>
+									<td>{{$journal->categories[0]->name}}</td>
 									<td>{{ date('d-M-Y', strtotime($journal->created_at))  }}</td>
 									
 									@if ( $journal->status == "Waiting" )

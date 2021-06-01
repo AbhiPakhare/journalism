@@ -81,7 +81,7 @@ class RegisterController extends Controller
                 'regex:/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix'
             ],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'phone' => ['required', 'digits:10']
+            'phone' => ['required', 'digits:10', 'unique:phones,phone_number']
         ]);
     }
 
