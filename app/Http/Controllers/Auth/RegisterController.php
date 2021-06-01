@@ -72,13 +72,20 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => [
+                'required',
+                'string',
+                'email',
+                'max:255',
+                'unique:users',
+                'regex:/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix'
+            ],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'phone' => ['required', 'digits:10']
         ]);
     }
 
-    /** 
+    /**
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
@@ -91,7 +98,7 @@ class RegisterController extends Controller
                     'email' => $data['email'],
                     'password' => Hash::make($data['password'])
                 ]);
-                
+
          $role = new Role();
          $role->name = Role::USER;
          $user->role()->save($role);
