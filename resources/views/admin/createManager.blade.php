@@ -25,24 +25,24 @@
                         {{$message}}
                     </small>
                 @enderror
-                <div class="form-group">
-                    <label for="manager password">Password</label>
-                    <input type="password" name="password" class="form-control"  placeholder="Enter Password">
-                </div>
-                @error('password')
-                    <small id="passwordHelpBlock" class="text-danger form-text">
-                        {{$message}}
-                    </small>
-                @enderror
-                <div class="form-group">
-                    <label for="manager password">Confirm Password</label>
-                    <input type="password" name="password_confirmation" class="form-control"  placeholder="Confirm Password">
-                </div>
-                @error('password_confirmation')
-                    <small id="passwordHelpBlock" class="text-danger form-text">
-                        {{$message}}
-                    </small>
-                @enderror
+{{--                <div class="form-group">--}}
+{{--                    <label for="manager password">Password</label>--}}
+{{--                    <input type="password" name="password" class="form-control"  placeholder="Enter Password">--}}
+{{--                </div>--}}
+{{--                @error('password')--}}
+{{--                    <small id="passwordHelpBlock" class="text-danger form-text">--}}
+{{--                        {{$message}}--}}
+{{--                    </small>--}}
+{{--                @enderror--}}
+{{--                <div class="form-group">--}}
+{{--                    <label for="manager password">Confirm Password</label>--}}
+{{--                    <input type="password" name="password_confirmation" class="form-control"  placeholder="Confirm Password">--}}
+{{--                </div>--}}
+{{--                @error('password_confirmation')--}}
+{{--                    <small id="passwordHelpBlock" class="text-danger form-text">--}}
+{{--                        {{$message}}--}}
+{{--                    </small>--}}
+{{--                @enderror--}}
                 <button type="submit" class="btn btn-primary">Create Manager</button>
             </form>
         </div>
