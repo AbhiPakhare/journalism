@@ -73,6 +73,10 @@ class ReviewerController extends Controller
      */
     public function store(StoreReviewerRequest $request)
     {
+		$request->validate([
+			'name' => ['required'],
+			'email' => ['required', 'email:rfc,dns']
+		]);
         $reviewer = User::create([
             'name' => $request->name,
             'email' => $request->email,
