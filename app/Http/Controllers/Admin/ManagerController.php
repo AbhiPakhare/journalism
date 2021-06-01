@@ -66,6 +66,10 @@ class ManagerController extends Controller
      */
     public function store(StoreManagerRequest $request)
     {
+		$request->validate([
+			'name' => ['required'],
+			'email' => ['required', 'email:rfc,dns']
+		]);
         $manager = User::create([
                         'name' => $request->name,
                         'email' => $request->email,
