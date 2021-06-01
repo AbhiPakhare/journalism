@@ -16,6 +16,13 @@
       </div>
 
       <div class="card-body">
+          <div class="rules">
+              <ul>
+                  <li>Feilds with <span class="mandatory">*</span> this are mandatory.</li>
+                  <li>All the file should be of .pdf or .doc or .docx extension.</li>
+                  <li>Each file size should be less than 5MB.</li>
+              </ul>
+          </div>
         <form action="{{ route('user.journal.store') }}" method="POST" enctype="multipart/form-data">
           @csrf
             <div class="form-group">
@@ -45,13 +52,6 @@
 					@endforeach
 				</select>
             </div>
-			<div class="rules">
-				<ul>
-					<li>Feilds with <span class="mandatory">*</span> this are mandatory.</li>
-					<li>All the file should be of .pdf or .doc or .docx extension.</li>
-					<li>Each file size should be less than 5MB.</li>
-					</ul>
-			</div>
             <button type="submit" class="btn btn-primary btn-lg btn-block">Submit Journal</button>
         </form>
       </div>
@@ -64,7 +64,6 @@
     <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
     <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
     <script>
-        // In your Javascript (external .js resource or <script> tag)
         $(document).ready(function() {
             $('#categories').select2({
                 placeholder: "Select Category",
@@ -83,9 +82,15 @@
                 'application/msword',
                 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
             ],
+            fileValidateTypeLabelExpectedTypesMap : {
+                'application/pdf' : "pdf",
+                'application/msword' : "doc",
+                'application/vnd.openxmlformats-officedocument.wordprocessingml.document' : "docx"
+            },
             required : true,
             allowRevert : false,
-            credits :false
+            credits :false,
+            labelIdle :"Upload <strong>Title</strong> in PDF or Word file<span class='filepond--label-action'> Browse </span>"
         });
         FilePond.create(document.querySelector('input[id = "content"]'), {
             acceptedFileTypes: [
@@ -93,9 +98,15 @@
                 'application/msword',
                 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
             ],
+            fileValidateTypeLabelExpectedTypesMap : {
+                'application/pdf' : "pdf",
+                'application/msword' : "doc",
+                'application/vnd.openxmlformats-officedocument.wordprocessingml.document' : "docx"
+            },
             required : true,
             allowRevert : false,
-            credits :false
+            credits :false,
+            labelIdle :"Upload <strong>Content</strong> in PDF or Word file<span class='filepond--label-action'> Browse </span>"
         });
         FilePond.create(document.querySelector('input[id = "paper"]'), {
             acceptedFileTypes: [
@@ -103,9 +114,15 @@
                 'application/msword',
                 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
             ],
+            fileValidateTypeLabelExpectedTypesMap : {
+                'application/pdf' : "pdf",
+                'application/msword' : "doc",
+                'application/vnd.openxmlformats-officedocument.wordprocessingml.document' : "docx"
+            },
             required : true,
             allowRevert : false,
-            credits :false
+            credits :false,
+            labelIdle :"Upload <strong>Paper Document</strong> in PDF or Word file<span class='filepond--label-action'> Browse </span>"
         });
         FilePond.create(document.querySelector('input[id = "bibliography"]'), {
             acceptedFileTypes: [
@@ -113,9 +130,15 @@
                 'application/msword',
                 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
             ],
+            fileValidateTypeLabelExpectedTypesMap : {
+                'application/pdf' : "pdf",
+                'application/msword' : "doc",
+                'application/vnd.openxmlformats-officedocument.wordprocessingml.document' : "docx"
+            },
             required : true,
             allowRevert : false,
-            credits :false
+            credits :false,
+            labelIdle :"Upload <strong>Bibliography</strong> in PDF or Word file<span class='filepond--label-action'> Browse </span>"
         });
 
         FilePond.setOptions({
