@@ -37,7 +37,8 @@
 							@if ($status == "pending")
 								<th scope="col">Action</th>
 							@endif
-						</tr>
+                            <th scope="col">Final document</th>
+                        </tr>
 						</thead>
 						<tbody >
 							@foreach ($journals as $journal )
@@ -46,37 +47,37 @@
 									<td>{{ $journal->reference_id }}</td>
 									<td>{{$journal->categories[0]->name}}</td>
 									<td>{{ date('d-M-Y', strtotime($journal->created_at))  }}</td>
-									
+
 									@if ( $journal->status == "Waiting" )
 										<td class="table-info text-dark">{{ $journal->status }}</td>
-									
+
 									@elseif ( $journal->status == "Approved" )
 										<td class="table-success">{{ $journal->status }}</td>
 
 									@elseif ( $journal->status == "Pending" )
 										<td class="table-warning">{{ $journal->status }}</td>
-									
+
 									@elseif ( $journal->status == "Rejected" )
 										<td class="table-danger">{{ $journal->status }}</td>
 
 									@elseif ($journal->status == "Pending Payment")
 										<td class="table-secondary">{{ $journal->status }}</td>
-									@endif
-									
-									{{-- Payment Status --}}
-									@if ($status == "index")	
-										@if ($journal->status == "Approved" && $journal->payment_status)
-											<td>Payment Done.</td>
+                                    @elseif ($journal->status == "Completed")
+                                        <td class="table-success">{{ $journal->status }}</td>
+                                    @endif
 
-										@elseif ($journal->status == "Pending Payment" && !$journal->payment_status)
+									{{-- Payment Status --}}
+									@if ($status == "index")
+										@if ( in_array($journal->status, ['Approved','Completed']) && $journal->payment_status)
+											<td>Payment Done.</td>
+										@elseif ($journal->status == "Pending Payment" && ! $journal->payment_status)
 											<td><a href="{{ url('user/razorpay/'.$journal->payment_link) }}" target="_blank">Make Payment</a></td>
 										@elseif ($journal->status == "Rejected")
 											<td>Not Applicable</td>
-
-										@elseif ($journal->status == "Pending" || $journal->status == "Waiting")
+										@elseif (in_array($journal->status, ['Pending','Waiting']))
 											<td>Not available yet</td>
 										@endif
-									@endif
+                                    @endif
 
 									@if ($status == "pending" || $status == "rejected")
 										<td>
@@ -106,7 +107,21 @@
 									@if  ($status == "pending")
 										<td>
 											<a href="{{ route('user.journal.edit', [$journal]) }}" class="btn btn-primary text-white">Re-Submit</a>
+                                        </td>
 									@endif
+                                    @if($journal->status == 'Approved')
+                                        <td>
+                                            <a href="{{ route('user.final-doc', [$journal]) }}" class="btn btn-info">Submit Final Documenent</a>
+                                        </td>
+                                    @elseif($journal->status == 'Completed')
+                                        <td>
+                                            <p>Submitted</p>
+                                        </td>
+                                    @else
+                                        <td>
+                                            <p>Not available yet</p>
+                                        </td>
+                                    @endif
 								</tr>
 
 							@endforeach

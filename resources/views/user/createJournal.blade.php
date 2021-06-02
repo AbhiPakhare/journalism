@@ -46,12 +46,15 @@
             </div>
             <div class="form-group my-3">
             <h5 class="card-title">Category <span class="mandatory">*</span></h5>
-				<select class="form-control form-control-sm categories"  name="category">
+				<select class="form-control form-control-sm categories @error('category') is-invalid @enderror"  name="category">
 					@foreach ($categories as $category)
 						<option value="{{ $category->id }}">{{ $category->name }}</option>
 					@endforeach
 				</select>
             </div>
+            @error('category')
+            <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
             <button type="submit" class="btn btn-primary btn-lg btn-block">Submit Journal</button>
         </form>
       </div>

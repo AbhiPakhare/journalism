@@ -1,4 +1,4 @@
-<?php	
+<?php
 
 use App\Role;
 use App\User;
@@ -35,5 +35,15 @@ class MakeUsersSeeder extends Seeder
         $reviewer->role()->save($role);
 		$reviewer->categories()->sync($categories);
 		$reviewer->save();
+
+        $user = User::create([
+            'name' => "User",
+            'email' => "user@gmail.com",
+            'password' => Hash::make('abcd@1234'),
+            'is_verified' => true
+        ]);
+        $role = new Role();
+        $role->name = 'User';
+        $user->role()->save($role);
     }
 }

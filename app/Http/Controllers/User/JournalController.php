@@ -17,6 +17,9 @@ class JournalController extends Controller
         if (session('success_message')) {
             Alert::success('Success!', session('success_message'));
         }
+        if (session('error_message')) {
+            Alert::error('ErrorAlert',session('error_message'));
+        }
          return view('user.home');
     }
 	/**
@@ -57,7 +60,9 @@ class JournalController extends Controller
      */
 
 	public function store(Request $request){
-
+        $request->validate([
+            'category' => ['required','exists:categories,id']
+        ]);
 		$reference_id = time();
 		$journal = Journal::firstOrCreate([
 								'user_id' => auth()->user()->id,
@@ -74,7 +79,8 @@ class JournalController extends Controller
 				->toMediaCollection();
 
 		$journal->categories()->sync([$request->category]);
-		if($journal) {
+
+		if($journal->save()) {
 			$journal->user->notify(new ReferencesIdCreated($journal->user, $reference_id));
 			return redirect()
                 ->route('user.dashboard')
@@ -101,7 +107,7 @@ class JournalController extends Controller
         }
         else
         {
-            abort(403, 'File Type does not exist');
+            abort(403,  $file_name.' Type does not exist');
         }
 	}
 
@@ -120,6 +126,9 @@ class JournalController extends Controller
 			elseif ($request->hasFile('bibliography')) {
 				$request->file('bibliography')->storeAs('journal/temp/'.auth()->user()->id,'/bibliography.'.$request->file('bibliography')->extension());
 			}
+            elseif ($request->hasFile('final_document')) {
+                $request->file('final_document')->storeAs('journal/temp/'.auth()->user()->id,'/final_document.'.$request->file('final_document')->extension());
+            }
 		} catch (\Throwable $th) {
 			return $th;
 		}
@@ -127,6 +136,23 @@ class JournalController extends Controller
 	}
 
 
+    public function showFinalDocument(Journal $journal)
+    {
+        return view('user.submitFinalDocument', compact('journal'));
+	}
+
+    public function storeFinalDocument(Request $request)
+    {
+        $journal = Journal::findOrFail($request->id);
+        $journal->addMedia($this->checkJournalFileType('final_document'))
+                ->toMediaCollection();
+        $journal->status = Journal::COMPLETED;
+        if ($journal->save()) {
+            return redirect()->route('user.dashboard')->withSuccessMessage('Final document submitted successfully');
+        }
+        return redirect()->route('user.dashboard')->withErrorMessage('Something went wrong contact admin');
+
+    }
 
 
 	/**

@@ -79,6 +79,8 @@ Route::group([
     'prefix' => 'user',
     'middleware' => ['auth','can:user']
 ], function () {
+    Route::get('final-document/{journal}','User\JournalController@showFinalDocument')->name('final-doc');
+    Route::post('final-document','User\JournalController@storeFinalDocument')->name('store-final-doc');
     Route::get('razorpay/{url}', 'RazorpayController@razorpay')->name('razorpay');
     Route::post('razorpaypayment', 'RazorpayController@payment')->name('payment');
     Route::get('/dashboard', 'User\JournalController@dashboard')->name('dashboard');

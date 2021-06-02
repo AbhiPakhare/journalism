@@ -75,7 +75,7 @@
                                                     <div>
                                                         @if(!empty($journal_detail->getMedia()))
                                                             @foreach ($journal_detail->getMedia() as $item)
-                                                                <a href="{{ $item->getUrl() }}" target="_blank" class="btn btn-info">{{ $item->name }}</a>
+                                                                <a href="{{ $item->getUrl() }}" target="_blank" class="btn btn-info">{{ strtoupper(str_replace('_',' ',$item->name ))}}</a>
                                                             @endforeach
                                                         @endif
                                                     </div>
