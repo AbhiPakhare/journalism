@@ -10,7 +10,7 @@
   }
   .progressbar li {
       list-style-type: none;
-      width: 10%;
+      width: 15%;
       float: left;
       font-size: 12px;
       position: relative;
@@ -68,7 +68,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					
+
 					@foreach ($journals as $journal )
 					<tr >
 							<td>{{ $loop->iteration }}</td>
@@ -76,12 +76,12 @@
 							<td>
 								<ul class="progressbar">
 									<li class="active">Submitted</li>
-									<li 
+									<li
 										class = "{{ $journal->journey_status['stage'] >= 1 ? "active" : "false" }}"
 									>
 										Checking process
 									</li>
-									<li 
+									<li
 										class="{{ $journal->journey_status['stage'] >= 2 ? "active" : "false" }}"
 									>
 										@if ($journal->journey_status['stage'] > 2)
@@ -92,7 +92,7 @@
 											Status
 										@endif
 									</li>
-									<li 
+									<li
 										class="{{ $journal->journey_status['stage'] >= 3 ? "active" : "false" }}"
 									>
 										@if ($journal->journey_status['stage'] > 3)
@@ -102,7 +102,7 @@
 										@else
 											Payment
 										@endif
-										
+
 									</li>
 									<li
 										class="{{ $journal->journey_status['stage'] == 4 ? "active" : "false" }}"
