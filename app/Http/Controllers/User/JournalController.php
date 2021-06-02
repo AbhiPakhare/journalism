@@ -20,7 +20,9 @@ class JournalController extends Controller
         if (session('error_message')) {
             Alert::error('ErrorAlert',session('error_message'));
         }
-         return view('user.home');
+		$journals = Journal::where('user_id', auth()->user()->id)->paginate(10);
+		// dd($journals->toArray());
+        return view('user.home', compact('journals'));
     }
 	/**
 	 * Display a listing of the resource.

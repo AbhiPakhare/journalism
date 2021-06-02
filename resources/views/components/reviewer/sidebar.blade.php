@@ -14,7 +14,7 @@
         <li class="c-sidebar-nav-title">Journal</li>
         <li class="c-sidebar-nav-dropdown">
             <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                Manager Journal
+                Manage Journal
             </a>
             <ul class="c-sidebar-nav-dropdown-items">
                 <li class="c-sidebar-nav-item">
