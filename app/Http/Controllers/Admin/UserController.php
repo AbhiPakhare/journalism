@@ -45,7 +45,7 @@ class UserController extends Controller
         $journal_stats['waiting'] = Journal::waiting()->count();
         $journal_stats['rejected'] = Journal::rejected()->count();
         $journal_stats['pending'] = Journal::pending()->count();
-		$journal_stats['payment_pending'] = Journal::paymentPending()->count();
+		$journal_stats['payment pending'] = Journal::paymentPending()->count();
 		
 		return response()->json($journal_stats);
 	}
@@ -71,7 +71,7 @@ class UserController extends Controller
 	{
 		$journals = cache()->remember('journal-approved-api', 60 * 5, function(){
 			return Journal::whereBetween('created_at', [now()->subDays(30), now()])
-				   ->where('status', 'Approved')
+				   ->approved()
 				   ->orderBy('created_at')->get()->groupBy(function($journal) {
 					   return $journal->created_at->format('d-M');
 				   });
@@ -120,7 +120,7 @@ class UserController extends Controller
 	{
 
 		$files_names = Journal::with(['categories:id,name','user', 'reviewer'])
-						->where('status', Journal::APPROVED);
+						->approved();
 		return datatables()->eloquent($files_names)
 			->editColumn('created_at', function($manager) {
 				return $manager->created_at ? with(new Carbon($manager->created_at))->format('d/M/Y') : '';

@@ -67,7 +67,7 @@ class Journal extends Model implements HasMedia
      */
     public function scopeApproved($query)
     {
-        return $query->where('status', Journal::APPROVED);
+        return $query->whereIn('status',[Journal::COMPLETED,Journal::APPROVED]);
     }
 
     /**
