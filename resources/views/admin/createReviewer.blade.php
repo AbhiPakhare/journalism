@@ -26,24 +26,6 @@
                     </small>
                 @enderror
                 <div class="form-group">
-                    <label for="manager password">Password</label>
-                    <input type="password" name="password" class="form-control"  placeholder="Enter Password">
-                </div>
-                @error('password')
-                    <small id="passwordHelpBlock" class="text-danger form-text">
-                        {{$message}}
-                    </small>
-                @enderror
-                <div class="form-group">
-                    <label for="manager password">Confirm Password</label>
-                    <input type="password" name="password_confirmation" class="form-control"  placeholder="Confirm Password">
-                </div>
-                @error('password_confirmation')
-                    <small id="passwordHelpBlock" class="text-danger form-text">
-                        {{$message}}
-                    </small>
-                @enderror
-                <div class="form-group">
                     <label for="Categories">Select Category</label>
                     <select class="form-control custom-select custom-select-lg mb-3" id="categories" name="categories[]" multiple="multiple">
                         @foreach($categories as $category)

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Notifications\WelcomeStaffNotification;
 use App\Role;
 use App\User;
 use App\Category;
@@ -73,22 +74,21 @@ class ReviewerController extends Controller
      */
     public function store(StoreReviewerRequest $request)
     {
-		$request->validate([
+		$validated = $request->validate([
 			'name' => ['required'],
 			'email' => ['required', 'email:rfc,dns']
 		]);
-        $reviewer = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+        $validated['password'] =  Hash::make('test@1234');
+        $reviewer = User::create($validated);
 
         $role = new Role();
         $role->name = Role::REVIEWER;
         $reviewer->role()->save($role);
         $reviewer->save();
         $reviewer->categories()->sync($request->categories);
-        $reviewer->save();
+        if ($reviewer->save()) {
+            $reviewer->notify(new WelcomeStaffNotification($reviewer));
+        }
 
         return redirect()->route('admin.reviewer.index');
     }

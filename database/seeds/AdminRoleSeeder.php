@@ -18,10 +18,11 @@ class AdminRoleSeeder extends Seeder
                     'name' => "Administrator",
                     'email' => "admin@admin.com",
                     'password' => Hash::make('admin@1234'),
+                    'is_verified' => true
                 ]);
         $role = new Role();
         $role->name = 'Admin';
         $admin->role()->save($role);
-        
+
     }
 }

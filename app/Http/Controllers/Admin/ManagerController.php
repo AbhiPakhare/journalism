@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Notifications\WelcomeStaffNotification;
 use App\Role;
 use App\User;
 use Carbon\Carbon;
@@ -66,22 +67,22 @@ class ManagerController extends Controller
      */
     public function store(StoreManagerRequest $request)
     {
-		$request->validate([
+		$validated = $request->validate([
 			'name' => ['required'],
 			'email' => ['required', 'email:rfc,dns']
 		]);
-        $manager = User::create([
-                        'name' => $request->name,
-                        'email' => $request->email,
-                        'password' => Hash::make($request->password),
-                    ]);
+		$validated['password'] =  Hash::make('test@1234');
+
+        $manager = User::create($validated);
 
         $role = new Role();
         $role->name = Role::MANAGER;
         $manager->save();
         $manager->role()->save($role);
-        $manager->save();
 
+        if ($manager->save()){
+            $manager->notify(new WelcomeStaffNotification($manager));
+        }
         return redirect()->route('admin.manager.index');
     }
 
