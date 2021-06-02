@@ -19,6 +19,7 @@ class MakeUsersSeeder extends Seeder
 			'name' => "Manager",
 			'email' => "manager@gmail.com",
 			'password' => Hash::make('abcd@1234'),
+			'is_verified' => true
 		]);
         $role = new Role();
         $role->name = 'Manager';
@@ -28,10 +29,12 @@ class MakeUsersSeeder extends Seeder
 			'name' => "Reviewer",
 			'email' => "reviewer@gmail.com",
 			'password' => Hash::make('abcd@1234'),
+			'is_verified' => true
 		]);
         $role = new Role();
         $role->name = 'Reviewer';
 		$categories = Category::select('id')->get()->toArray();
+		
         $reviewer->role()->save($role);
 		$reviewer->categories()->sync($categories);
 		$reviewer->save();

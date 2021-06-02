@@ -126,7 +126,7 @@ class Journal extends Model implements HasMedia
 				'stage' => 0,
 				'stage_name' =>"Submitted"
 			];
-		}elseif(! is_null($this->reviewer_id) && ! in_array($this->status, ['Rejected', 'Approved', 'Pending Payment','Pending'])) {
+		}elseif(! is_null($this->reviewer_id) && ! in_array($this->status, ['Rejected', 'Approved', 'Pending Payment','Pending', 'Completed'])) {
 			return [
 				'stage' => 1,
 				'stage_name' =>"Checking Process"
@@ -163,7 +163,7 @@ class Journal extends Model implements HasMedia
 				'stage' => 3,
 				'stage_name' =>"Done"
 			];
-		}elseif($this->status == "Approved" && $this->payment_status && $this->final_document_status){
+		}elseif($this->status == "Completed" && $this->payment_status && $this->final_document_status){
 			return [
 				'stage' => 4,
 				'stage_name' => "Final document submitted"

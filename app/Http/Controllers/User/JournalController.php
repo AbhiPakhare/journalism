@@ -149,6 +149,7 @@ class JournalController extends Controller
         $journal->addMedia($this->checkJournalFileType('final_document'))
                 ->toMediaCollection();
         $journal->status = Journal::COMPLETED;
+		$journal->final_document_status = true;
         if ($journal->save()) {
             return redirect()->route('user.dashboard')->withSuccessMessage('Final document submitted successfully');
         }
