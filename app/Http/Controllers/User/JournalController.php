@@ -17,7 +17,9 @@ class JournalController extends Controller
         if (session('success_message')) {
             Alert::success('Success!', session('success_message'));
         }
-         return view('user.home');
+		$journals = Journal::where('user_id', auth()->user()->id)->paginate(10);
+		// dd($journals->toArray());
+        return view('user.home', compact('journals'));
     }
 	/**
 	 * Display a listing of the resource.

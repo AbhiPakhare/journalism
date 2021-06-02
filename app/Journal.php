@@ -23,7 +23,16 @@ class Journal extends Model implements HasMedia
     public const PENDING = "Pending";
     public const PENDING_PAYMENT = "Pending Payment";
 
-    protected $fillable = ['user_id','reference_id'];
+    protected $fillable = [
+		'user_id',
+		'reviewer_id',
+		'reference_id',
+		'status',
+		'reason',
+		'payment_status',
+		'payment_link',
+		'final_document_status'
+	];
 
     /**
      * Get the user that owns the phone.
@@ -104,4 +113,60 @@ class Journal extends Model implements HasMedia
         return $query->where('status', Journal::PENDING_PAYMENT);
     }
 
+	/**
+     * Get the Journal journey status.
+     *
+     * @return string
+     */
+    public function getJourneyStatusAttribute()
+    {
+		if(is_null($this->reviewer_id) ){
+			return [
+				'stage' => 0,
+				'stage_name' =>"Submitted"
+			];
+		}elseif(! is_null($this->reviewer_id) && ! in_array($this->status, ['Rejected', 'Approved', 'Pending Payment','Pending'])) {
+			return [
+				'stage' => 1,
+				'stage_name' =>"Checking Process"
+			];
+
+		}elseif($this->status == "Waiting" && ! is_null($this->reviewer_id)) {
+
+			return [
+				'stage' => 2,
+				'stage_name' =>"Waiting"
+			];
+
+		}elseif($this->status == "Pending"){
+
+			return [
+				'stage' => 2,
+				'stage_name' =>"Pending"
+			];
+			
+		}elseif($this->status == "Rejected"){
+
+			return [
+				'stage' => 2,
+				'stage_name' =>"Rejected"
+			];
+			
+		}elseif ($this->status == "Pending Payment" && ! $this->payment_status) {
+			return [
+				'stage' => 3,
+				'stage_name' =>"Pending"
+			];
+		}elseif($this->status == "Approved" && $this->payment_status && !$this->final_document_status) {
+			return [
+				'stage' => 3,
+				'stage_name' =>"Done"
+			];
+		}elseif($this->status == "Approved" && $this->payment_status && $this->final_document_status){
+			return [
+				'stage' => 4,
+				'stage_name' => "Final document submitted"
+			];
+		}
+    }
 }
