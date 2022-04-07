@@ -17,6 +17,9 @@
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
+
     <style>
         body, html{
             font-family: 'Roboto', sans-serif;
@@ -27,22 +30,24 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 </head>
 <body class="c-app">
-@include('components.admin.sidebar')
-
-<div class="c-wrapper">
-    @include('components.navbar')
-    <div class="c-body">
-        <main class="c-main">
-            <div class="container-fluid">
-                    @yield('content')
+    <div class="wrapper">
+        <!-- @include('components.admin.sidebar') -->
+        <div class="c-wrapper">
+            @include('components.navbar')
+            <div class="c-body">
+                <main class="c-main">
+                    <div class="container-fluid">
+                            @yield('content')
+                    </div>
+                </main>
             </div>
-        </main>
+            <footer class="c-footer">
+                <div><a href="https://coreui.io">CoreUI</a> © 2020 creativeLabs.</div>
+                <div class="mfs-auto">Powered by&nbsp;<a href="https://coreui.io/pro/">CoreUI Pro</a></div>
+            </footer>
+        </div>
     </div>
-    <footer class="c-footer">
-        <div><a href="https://coreui.io">CoreUI</a> © 2020 creativeLabs.</div>
-        <div class="mfs-auto">Powered by&nbsp;<a href="https://coreui.io/pro/">CoreUI Pro</a></div>
-    </footer>
-</div>
+
 <!-- Optional JavaScript -->
 <!-- Popper.js first, then CoreUI JS -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
