@@ -21,7 +21,6 @@ class JournalController extends Controller
             Alert::error('ErrorAlert',session('error_message'));
         }
 		$journals = Journal::where('user_id', auth()->user()->id)->paginate(10);
-		// dd($journals->toArray());
         return view('user.home', compact('journals'));
     }
 	/**
